@@ -1,0 +1,28 @@
+<div class="navbar">
+  <p-button class="navbar__button" (onClick)="sidebarVisible = true" icon="pi pi-arrow-right"></p-button>
+
+  <p-button class="navbar__button" label="lines" [text]="true" severity="secondary"
+    (click)="navigate('/lines')"></p-button>
+  <p-button class="navbar__button" label="localizaciones" [text]="true" severity="secondary"
+    (click)="navigate('/locations')"></p-button>
+
+  <p-button class="navbar__button navbar__button--logout" label="Salir" [text]="true" severity="danger"
+    (click)="logout()"></p-button>
+</div>
+<main>
+
+  <p-sidebar [(visible)]="sidebarVisible">
+
+    <p-button label="lines" [text]="true" severity="secondary" (click)="navigate('/lines')" />
+    <br>
+    <p-button label="localizaciones" [text]="true" severity="secondary" (click)="navigate('/locations')" />
+    <br>
+    <p-button label="islas" [text]="true" severity="secondary" (click)="navigate('/islands')" />
+    <br>
+    <p-button label="horas" [text]="true" severity="secondary" (click)="navigate('/hours')" />
+    <br>
+
+  </p-sidebar>
+
+  <router-outlet></router-outlet>
+</main>

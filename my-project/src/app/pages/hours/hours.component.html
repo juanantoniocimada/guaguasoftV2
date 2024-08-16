@@ -1,0 +1,108 @@
+<p-progressBar [mode]="mode" [style]="{ height: '6px' }" />
+
+<h1>
+  Gestión de horas | lineas
+</h1>
+
+<p-button class="navbar__button navbar__button--logout" label="Añadir hora a linea" icon="pi pi-check" [outlined]="true"
+  severity="warning" (click)="add()">
+</p-button>
+
+<p-dropdown [options]="routes" [(ngModel)]="route" optionLabel="description" (onChange)="onOptionChange($event)"
+  placeholder="selecciona una ruta" />
+
+<div class="card">
+  <p-table [value]="hours" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+
+        <th>value</th>
+        <th>lunes</th>
+        <th>martes</th>
+        <th>miércoles</th>
+        <th>jueves</th>
+        <th>viernes</th>
+        <th>sábado</th>
+        <th>domingo</th>
+        <th>festivos</th>
+        <th>linea descripción</th>
+        <th>linea num</th>
+
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-hour>
+      <tr>
+        <td>{{ hour.value }}</td>
+
+        <td [ngClass]="{ 'text-red': hour.monday === '0', 'text-orange': hour.monday === '1' }">
+          <span>
+            {{ hour.monday === '1' ? 'Sí' : 'No' }}
+          </span>
+        </td>
+        <td [ngClass]="{ 'text-red': hour.tuesday === '0', 'text-orange': hour.tuesday === '1' }">
+          <span>
+            {{ hour.tuesday === '1' ? 'Sí' : 'No' }}
+          </span>
+        </td>
+        <td [ngClass]="{ 'text-red': hour.wednesday === '0', 'text-orange': hour.wednesday === '1' }">
+          <span>
+            {{ hour.wednesday === '1' ? 'Sí' : 'No' }}
+          </span>
+        </td>
+        <td [ngClass]="{ 'text-red': hour.thursday === '0', 'text-orange': hour.thursday === '1' }">
+          <span>
+            {{ hour.thursday === '1' ? 'Sí' : 'No' }}
+          </span>
+        </td>
+        <td [ngClass]="{ 'text-red': hour.friday === '0', 'text-orange': hour.friday === '1' }">
+          <span>
+            {{ hour.friday === '1' ? 'Sí' : 'No' }}
+          </span>
+        </td>
+
+        <td [ngClass]="{ 'text-red': hour.saturday === '0', 'text-orange': hour.saturday === '1' }">
+          <span>
+            {{ hour.saturday === '1' ? 'Sí' : 'No' }}
+          </span>
+        </td>
+        <td [ngClass]="{ 'text-red': hour.sunday === '0', 'text-orange': hour.sunday === '1' }">
+          <span>
+            {{ hour.sunday === '1' ? 'Sí' : 'No' }}
+          </span>
+        </td>
+        <td [ngClass]="{ 'text-red': hour.festive === '0', 'text-orange': hour.festive === '1' }">
+          <span>
+            {{ hour.festive === '1' ? 'Sí' : 'No' }}
+          </span>
+        </td>
+
+
+
+        <td>{{ hour.description }}</td>
+        <td>{{ hour.number }}</td>
+
+        <td>
+          <p-button (click)="confirm(hour)" icon="pi pi-trash" severity="warning" />
+          <p-button icon="pi pi-file-edit" severity="help" />
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+          <td colspan="11">No data.</td>
+      </tr>
+  </ng-template>
+  </p-table>
+</div>
+
+<p-toast />
+
+<p-confirmDialog>
+  <ng-template pTemplate="message" let-message>
+    <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+      <i class="pi pi-exclamation-circle text-6xl text-primary-500"></i>
+      <p>{{ message.message }}</p>
+    </div>
+  </ng-template>
+</p-confirmDialog>

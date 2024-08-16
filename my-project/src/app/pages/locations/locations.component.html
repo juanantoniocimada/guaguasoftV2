@@ -1,0 +1,161 @@
+<p-progressBar [mode]="mode" [style]="{ height: '6px' }" />
+
+<h1>
+  Gestión de paradas | lineas
+</h1>
+
+<p-button class="navbar__button navbar__button--logout" label="Añadir parada a linea" icon="pi pi-check" [outlined]="true"
+  severity="warning" (click)="add()">
+</p-button>
+
+<p-dropdown [options]="routes" [(ngModel)]="route" optionLabel="description" (onChange)="onOptionChange($event)"
+  placeholder="selecciona una ruta" />
+
+<div class="card">
+  <p-steps
+    [model]="locations"
+    [readonly]="false"
+    [activeIndex]="activeIndex"
+    (activeIndexChange)="onActiveIndexChange($event)"
+  />
+
+</div>
+
+<div class="card">
+  <h2>
+    {{ location.description }}
+  </h2>
+
+  <div class="fields">
+    <div class="field">
+      parada preferente
+    </div>
+    <div class="field">
+      tipo parada
+    </div>
+    <div class="field">
+      lunes
+    </div>
+    <div class="field">
+      martes
+    </div>
+    <div class="field">
+      miércoles
+    </div>
+    <div class="field">
+      jueves
+    </div>
+    <div class="field">
+      viernes
+    </div>
+    <div class="field">
+      sabado
+    </div>
+    <div class="field">
+      domingo
+    </div>
+    <div class="field">
+      festivo
+    </div>
+  </div>
+
+  <div class="fields">
+    <div class="field">
+      <div *ngIf="location.preferred_stop === '1'; else notOk">
+        <i class="pi pi-check" style="font-size: 2em; color: green;"></i>
+      </div>
+      <ng-template #notOk>
+        <i class="pi pi-times" style="font-size: 2em; color: red;"></i>
+      </ng-template>
+    </div>
+
+    <div class="field">
+      {{  location.type }}
+    </div>
+
+    <div class="field">
+      <div *ngIf="location.monday === '1'; else notOk">
+        <i class="pi pi-check" style="font-size: 2em; color: green;"></i>
+      </div>
+      <ng-template #notOk>
+        <i class="pi pi-times" style="font-size: 2em; color: red;"></i>
+      </ng-template>
+    </div>
+
+    <div class="field">
+      <div *ngIf="location.tuesday=== '1'; else notOk">
+        <i class="pi pi-check" style="font-size: 2em; color: green;"></i>
+      </div>
+      <ng-template #notOk>
+        <i class="pi pi-times" style="font-size: 2em; color: red;"></i>
+      </ng-template>
+    </div>
+
+    <div class="field">
+      <div *ngIf="location.wednesday=== '1'; else notOk">
+        <i class="pi pi-check" style="font-size: 2em; color: green;"></i>
+      </div>
+      <ng-template #notOk>
+        <i class="pi pi-times" style="font-size: 2em; color: red;"></i>
+      </ng-template>
+    </div>
+
+    <div class="field">
+      <div *ngIf="location.thursday=== '1'; else notOk">
+        <i class="pi pi-check" style="font-size: 2em; color: green;"></i>
+      </div>
+      <ng-template #notOk>
+        <i class="pi pi-times" style="font-size: 2em; color: red;"></i>
+      </ng-template>
+    </div>
+
+    <div class="field">
+      <div *ngIf="location.friday === '1'; else notOk">
+        <i class="pi pi-check" style="font-size: 2em; color: green;"></i>
+      </div>
+      <ng-template #notOk>
+        <i class="pi pi-times" style="font-size: 2em; color: red;"></i>
+      </ng-template>
+    </div>
+
+    <div class="field">
+      <div *ngIf="location.saturday === '1'; else notOk">
+        <i class="pi pi-check" style="font-size: 2em; color: green;"></i>
+      </div>
+      <ng-template #notOk>
+        <i class="pi pi-times" style="font-size: 2em; color: red;"></i>
+      </ng-template>
+    </div>
+
+    <div class="field">
+      <div *ngIf="location.sunday === '1'; else notOk">
+        <i class="pi pi-check" style="font-size: 2em; color: green;"></i>
+      </div>
+      <ng-template #notOk>
+        <i class="pi pi-times" style="font-size: 2em; color: red;"></i>
+      </ng-template>
+    </div>
+
+    <div class="field">
+      <div *ngIf="location.festive=== '1'; else notOk">
+        <i class="pi pi-check" style="font-size: 2em; color: green;"></i>
+      </div>
+      <ng-template #notOk>
+        <i class="pi pi-times" style="font-size: 2em; color: red;"></i>
+      </ng-template>
+    </div>
+
+  </div>
+
+</div>
+
+<p-toast />
+
+<p-confirmDialog>
+  <ng-template pTemplate="message" let-message>
+    <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+      <i class="pi pi-exclamation-circle text-6xl text-primary-500"></i>
+      <p>{{ message.message }}</p>
+    </div>
+  </ng-template>
+</p-confirmDialog>

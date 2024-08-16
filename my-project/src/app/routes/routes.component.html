@@ -1,0 +1,24 @@
+<p>routes works!</p>
+
+<div class="card">
+  <p-table [value]="routes" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>number</th>
+        <th>description</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-route>
+      <tr>
+        <td>{{ route.number }}</td>
+        <td>{{ route.description }}</td>
+        <td>
+
+          actions
+
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

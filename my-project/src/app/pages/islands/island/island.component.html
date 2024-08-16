@@ -1,0 +1,37 @@
+<p>island works!</p>
+
+<!--
+  <p *ngIf="island">
+  {{ island.island_id }}
+  </p>
+  <p *ngIf="island">
+  {{ island.name }}
+  </p>
+  -->
+
+  <br>
+  <br>
+
+<p-floatLabel>
+  <input [disabled]="true" pInputText id="id" [(ngModel)]="id" />
+  <label for="id">id</label>
+</p-floatLabel>
+
+<br>
+<br>
+
+
+<p-floatLabel>
+  <input pInputText id="name" [(ngModel)]="name" />
+  <label for="name">name</label>
+</p-floatLabel>
+
+<div>
+  <p-button (click)="addIsland()" class="" label="nueva" [text]="true" severity="secondary">
+  </p-button>
+</div>
+
+<div>
+  <p-button (click)="updateIsland(island.island_id)" class="" label="editar" [text]="true" severity="secondary">
+  </p-button>
+</div>

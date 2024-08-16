@@ -1,0 +1,26 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3.5rem; /* Ajusta la altura según tus necesidades */
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Asegura que esté sobre otros contenidos */
+
+  &__button {
+    margin-right: 1rem;
+
+    &--logout {
+      margin-left: auto;
+      color: #dc3545;
+    }
+  }
+}
+
+main {
+  padding-top: 4rem; /* Debe ser igual o mayor que la altura del navbar */
+}
