@@ -1,36 +1,26 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterOutlet } from '@angular/router';
-import { SidebarModule } from 'primeng/sidebar';
-import { ButtonModule } from 'primeng/button';
-
+import { RouterOutlet } from '@angular/router';
+import { NavbarComponent } from "./components/navbar/navbar.component";
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ButtonModule, FormsModule, SidebarModule],
+  imports: [RouterOutlet, FormsModule, NavbarComponent, SidebarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
 
-  sidebarVisible: boolean = false;
 
-  constructor(private router: Router) {}
+  navigate(path: string) {
+    // this.router.navigate(['/loc']);
+  }
 
   ngOnInit() {
 
 
   }
-
-  navigate(path: string) {
-    this.router.navigate([path]);
-    // this.router.navigate(['/loc']);
-  }
-
-  logout() {
-
-  }
-
 
 }

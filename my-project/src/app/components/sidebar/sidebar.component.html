@@ -1,0 +1,24 @@
+<p-sidebar class="sidebar" [(visible)]="sidebarVisible" [style]="{ width: '250px' }">
+
+  <p-button
+      class="sidebar__button"
+      label="lines" [text]="true"
+      severity="secondary" (click)="navigate('/lines')" />
+  <br>
+  <p-button
+      class="sidebar__button"
+      label="localizaciones" [text]="true"
+      severity="secondary" (click)="navigate('/locations')" />
+  <br>
+  <p-button
+      class="sidebar__button"
+      label="islas" [text]="true"
+      severity="secondary" (click)="navigate('/islands')" />
+  <br>
+  <p-button
+      class="sidebar__button"
+      label="horas" [text]="true"
+      severity="secondary" (click)="navigate('/hours')" />
+  <br>
+
+</p-sidebar>

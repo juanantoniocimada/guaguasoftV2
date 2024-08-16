@@ -1,10 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { IslandService } from '../../services/island.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { HourService } from '../../services/hour.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ProgressBarModule } from 'primeng/progressbar';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
@@ -13,8 +10,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RouteService } from '../../services/route.service';
 import { CommonModule } from '@angular/common';
 import { StepsModule } from 'primeng/steps';
-import { log } from 'console';
 import { HttpClientModule } from '@angular/common/http';
+import { LoaderService } from '../../services/loader.service';
 
 
 @Component({
@@ -23,7 +20,6 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     TableModule,
     ButtonModule,
-    ProgressBarModule,
     ToastModule,
     ConfirmDialogModule,
     FormsModule,
@@ -48,12 +44,9 @@ export class LocationsComponent {
 
   activeIndex: number = 0;
 
-  locations: any[] = [
-
-  ];
+  locations: any[] = [];
 
   location: any = {};
-
 
   mode = 'determinate';
 
@@ -64,9 +57,8 @@ export class LocationsComponent {
 
   constructor(
     private routeService: RouteService,
-    private router: Router,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private loaderService: LoaderService
   ) {
 
   }
@@ -88,30 +80,23 @@ export class LocationsComponent {
 
   getLocations(idRoute: any) {
 
-    this.mode = 'indeterminate';
-
+    this.startLoading();
 
     this.routeService.getLocationsByRoute(idRoute).subscribe({
       next: (data: any) => {
         console.log(data);
         this.locations = data;
-        this.mode = 'determinate';
 
+        this.stopLoading();
       },
       error: (error: any) => {
-        this.mode = 'determinate';
 
-        console.error('Error fetching routes:', error);
-        // this.errorMessage = 'Failed to load islands. Please try again later.';
-        this.mode = 'determinate';
+        this.stopLoading();
+
         this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
 
       },
-      complete: () => {
-        console.log('Fetch routes request completed');
-        this.mode = 'determinate';
-
-      }
+      complete: () => { }
     });
   }
 
@@ -122,28 +107,32 @@ export class LocationsComponent {
     this.getLocations(event.value.id)
   }
 
+  // Ejemplo de cómo mostrar el loader
+  startLoading() {
+    this.loaderService.showIndeterminate();
+  }
+
+  // Ejemplo de cómo ocultar el loader
+  stopLoading() {
+    this.loaderService.hideLoader();
+  }
+
   getRoutes(): void {
     this.mode = 'indeterminate';
 
     this.routeService.getAllItems().subscribe({
       next: (data: any) => {
-        console.log(data);
         this.routes = data;
-        this.mode = 'determinate';
-
+        this.stopLoading();
       },
       error: (error: any) => {
-        console.error('Error fetching routes:', error);
-        // this.errorMessage = 'Failed to load islands. Please try again later.';
-        this.mode = 'determinate';
+
+        this.stopLoading();
+
         this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
 
       },
-      complete: () => {
-        console.log('Fetch routes request completed');
-        this.mode = 'determinate';
-
-      }
+      complete: () => { }
     });
   }
 

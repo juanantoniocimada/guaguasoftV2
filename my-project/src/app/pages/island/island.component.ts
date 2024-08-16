@@ -5,9 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { ButtonModule } from 'primeng/button';
-import { MessageService } from 'primeng/api';
 import { IslandService } from '../../services/island.service';
 import { HttpClientModule } from '@angular/common/http';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-island',
@@ -18,7 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
     InputTextModule,
     FloatLabelModule,
     ButtonModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers:[
     IslandService,
@@ -36,15 +36,13 @@ export class IslandComponent implements OnInit {
   constructor(private itemService: IslandService,
     private router: Router,
     private route: ActivatedRoute,
+    private loaderService: LoaderService
   ) {
 
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-
-      console.log(params);
-
 
         const id = params.get('id');
         if (id) {
@@ -57,7 +55,7 @@ export class IslandComponent implements OnInit {
   // Obtener una isla por ID
   getIslandById(id: string): void {
 
-
+    this.startLoading();
 
     this.itemService.getItemById(id).subscribe((data: any) => {
       this.island = data;
@@ -66,20 +64,36 @@ export class IslandComponent implements OnInit {
       this.id = this.island.island_id
       this.name = this.island.name
 
+      this.stopLoading();
+
     });
+  }
+
+  // Ejemplo de cómo mostrar el loader
+  startLoading() {
+    this.loaderService.showIndeterminate();
+  }
+
+  // Ejemplo de cómo ocultar el loader
+  stopLoading() {
+    this.loaderService.hideLoader();
   }
 
   // Agregar una nueva isla
   addIsland(): void {
+
+    this.startLoading();
+
 
     const newIsland = {
       name: this.name
     }
 
     this.itemService.createItem(newIsland).subscribe((data: any) => {
-        console.log(data);
 
-        this.router.navigate(['/islands']);
+      this.stopLoading();
+
+      this.router.navigate(['/islands']);
 
     });
   }
@@ -87,15 +101,16 @@ export class IslandComponent implements OnInit {
   // Actualizar una isla existente
   updateIsland(id: number): void {
 
+    this.startLoading();
+
+
     const newIsland = {
       name: this.name
     }
 
     this.itemService.updateItem(id, newIsland).subscribe((data: any) => {
-        console.log(data);
-
-        this.router.navigate(['/islands']);
-
+      this.stopLoading();
+      this.router.navigate(['/islands']);
     });
   }
 

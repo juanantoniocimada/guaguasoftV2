@@ -1,5 +1,10 @@
-<p>routes works!</p>
+<p-button
+  label="Añadir parada a linea"
+  icon="pi pi-check" [outlined]="true"
+  severity="warning"
+  (click)="add()">
 
+</p-button>
 <div class="card">
   <p-table [value]="routes" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
@@ -15,7 +20,8 @@
         <td>{{ route.description }}</td>
         <td>
 
-          actions
+          <p-button (click)="confirm()" icon="pi pi-trash" severity="warning" />
+          <p-button icon="pi pi-file-edit" severity="help" />
 
         </td>
       </tr>

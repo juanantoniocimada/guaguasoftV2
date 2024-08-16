@@ -1,11 +1,14 @@
-<p-progressBar [mode]="mode" [style]="{ height: '6px' }" />
 
 <h1>
   Gestión de paradas | lineas
 </h1>
 
-<p-button class="navbar__button navbar__button--logout" label="Añadir parada a linea" icon="pi pi-check" [outlined]="true"
-  severity="warning" (click)="add()">
+<p-button
+  class="navbar__button navbar__button--logout"
+  label="Añadir parada a linea"
+  icon="pi pi-check" [outlined]="true"
+  severity="warning"
+  (click)="add()">
 </p-button>
 
 <p-dropdown [options]="routes" [(ngModel)]="route" optionLabel="description" (onChange)="onOptionChange($event)"

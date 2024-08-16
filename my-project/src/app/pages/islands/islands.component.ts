@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { IslandService } from '../../services/island.service';
-import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
-import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { HttpClientModule } from '@angular/common/http';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-islands',
@@ -16,10 +15,10 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     TableModule,
     ButtonModule,
-    ProgressBarModule,
     ToastModule,
     ConfirmDialogModule,
-    HttpClientModule
+    HttpClientModule,
+
   ],
   providers:[
     IslandService,
@@ -30,6 +29,8 @@ import { HttpClientModule } from '@angular/common/http';
   styleUrl: './islands.component.scss'
 })
 export class IslandsComponent implements OnInit {
+
+  loaderState$ = this.loaderService.loaderState$;
 
   products: any[] = [];
 
@@ -43,14 +44,26 @@ export class IslandsComponent implements OnInit {
     determinate
   */
 
+
+
   constructor(private itemService: IslandService,
     private router: Router,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private loaderService: LoaderService
   ) {
 
   }
 
+  // Ejemplo de cómo mostrar el loader
+  startLoading() {
+    this.loaderService.showIndeterminate();
+  }
+
+  // Ejemplo de cómo ocultar el loader
+  stopLoading() {
+    this.loaderService.hideLoader();
+  }
 
   ngOnInit(): void {
     this.getAllIslands();
@@ -68,27 +81,20 @@ export class IslandsComponent implements OnInit {
 
   getAllIslands(): void {
 
-    this.mode = 'indeterminate';
+    this.startLoading();
 
     this.itemService.getAllItems().subscribe({
       next: (data: any) => {
         console.log(data);
         this.islands = data;
-        this.mode = 'determinate';
-
+        this.stopLoading();
       },
       error: (error) => {
-        console.error('Error fetching islands:', error);
-        // this.errorMessage = 'Failed to load islands. Please try again later.';
-        this.mode = 'determinate';
+        this.stopLoading();
         this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
 
       },
-      complete: () => {
-        console.log('Fetch islands request completed');
-        this.mode = 'determinate';
-
-      }
+      complete: () => { }
     });
   }
 

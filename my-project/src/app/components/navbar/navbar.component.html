@@ -1,1 +1,33 @@
-<p>navbar works!</p>
+
+
+<div class="navbar">
+
+
+  <p-button
+    icon="{{ (sidebarVisible$ | async) ? 'pi pi-chevron-left' : 'pi pi-chevron-right' }}"
+    styleClass="toggle-btn"
+    (click)="toggleSidebar()"
+  >
+  </p-button>
+
+  <p-button class="navbar__button" label="lines" [text]="true" severity="secondary"
+  (click)="navigate('/lines')"></p-button>
+
+  <p-button class="navbar__button" label="lines" [text]="true" severity="secondary"
+    (click)="navigate('/lines')"></p-button>
+
+  <p-button class="navbar__button" label="localizaciones" [text]="true" severity="secondary"
+    (click)="navigate('/locations')"></p-button>
+
+  <p-button class="navbar__button navbar__button--logout" label="Salir" [text]="true" severity="danger"
+    (click)="logout()"></p-button>
+
+
+</div>
+
+<div class="progress-container">
+  <p-progressBar [mode]="mode" [style]="{ height: '4px' }"></p-progressBar>
+</div>
+
+
+

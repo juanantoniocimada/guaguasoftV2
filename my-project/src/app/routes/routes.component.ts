@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { TableModule } from 'primeng/table';
-import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
-import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { RouteService } from '../services/route.service';
 import { DropdownModule } from 'primeng/dropdown';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { LoaderService } from '../services/loader.service';
 
 @Component({
   selector: 'app-routes',
@@ -18,7 +16,6 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     TableModule,
     ButtonModule,
-    ProgressBarModule,
     ToastModule,
     ConfirmDialogModule,
     DropdownModule,
@@ -43,7 +40,9 @@ export class RoutesComponent implements OnInit {
     private itemService: RouteService,
     private router: Router,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private loaderService: LoaderService
+
   ) {
 
   }
@@ -52,28 +51,55 @@ export class RoutesComponent implements OnInit {
     this.getRoutes();
   }
 
+  add() {
+
+  }
+
+  confirm() {
+
+
+    this.confirmationService.confirm({
+        header: `Borrar`,
+        message: '¿Quieres borrar la hora?.',
+        acceptIcon: 'pi pi-check mr-2',
+        rejectIcon: 'pi pi-times mr-2',
+        rejectButtonStyleClass: 'p-button-sm',
+        acceptButtonStyleClass: 'p-button-outlined p-button-sm',
+        accept: () => {
+
+        },
+        reject: () => {
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'no se ha podido borrar', life: 3000 });
+        }
+    });
+  }
+
+  // Ejemplo de cómo mostrar el loader
+  startLoading() {
+    this.loaderService.showIndeterminate();
+  }
+
+  // Ejemplo de cómo ocultar el loader
+  stopLoading() {
+    this.loaderService.hideLoader();
+  }
+
   getRoutes(): void {
-    this.mode = 'indeterminate';
+    this.startLoading();
 
     this.itemService.getAllItems().subscribe({
       next: (data: any) => {
-        console.log(data);
+        this.stopLoading();
         this.routes = data;
-        this.mode = 'determinate';
 
       },
       error: (error: any) => {
-        console.error('Error fetching routes:', error);
-        // this.errorMessage = 'Failed to load islands. Please try again later.';
-        this.mode = 'determinate';
+
+        this.stopLoading();
         this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
 
       },
-      complete: () => {
-        console.log('Fetch routes request completed');
-        this.mode = 'determinate';
-
-      }
+      complete: () => { }
     });
   }
 
