@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { HourService } from '../../services/hour.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -12,7 +12,6 @@ import { CommonModule } from '@angular/common';
 import { StepsModule } from 'primeng/steps';
 import { HttpClientModule } from '@angular/common/http';
 import { LoaderService } from '../../services/loader.service';
-
 
 @Component({
   selector: 'app-locations',
@@ -42,26 +41,14 @@ export class LocationsComponent {
   routes: any[] = [];
   route: any;
 
+  private _routeService= inject(RouteService);
+  private _messageService= inject(MessageService);
+  private _loaderService= inject(LoaderService);
+
   activeIndex: number = 0;
 
   locations: any[] = [];
-
   location: any = {};
-
-  mode = 'determinate';
-
-  /*
-    indeterminate
-    determinate
-  */
-
-  constructor(
-    private routeService: RouteService,
-    private messageService: MessageService,
-    private loaderService: LoaderService
-  ) {
-
-  }
 
   ngOnInit(): void {
     this.getRoutes();
@@ -79,48 +66,37 @@ export class LocationsComponent {
   }
 
   getLocations(idRoute: any) {
-
     this.startLoading();
 
-    this.routeService.getLocationsByRoute(idRoute).subscribe({
+    this._routeService.getLocationsByRoute(idRoute).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.locations = data;
-
         this.stopLoading();
       },
       error: (error: any) => {
-
         this.stopLoading();
-
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
-
+        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
       },
       complete: () => { }
     });
   }
 
   onOptionChange(event: any): void {
-
-    console.log('Description:', event.value.id);
-
     this.getLocations(event.value.id)
   }
 
-  // Ejemplo de cómo mostrar el loader
   startLoading() {
-    this.loaderService.showIndeterminate();
+    this._loaderService.showIndeterminate();
   }
 
-  // Ejemplo de cómo ocultar el loader
   stopLoading() {
-    this.loaderService.hideLoader();
+    this._loaderService.hideLoader();
   }
 
   getRoutes(): void {
-    this.mode = 'indeterminate';
+    this.startLoading();
 
-    this.routeService.getAllItems().subscribe({
+    this._routeService.getAllItems().subscribe({
       next: (data: any) => {
         this.routes = data;
         this.stopLoading();
@@ -129,7 +105,7 @@ export class LocationsComponent {
 
         this.stopLoading();
 
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
+        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
 
       },
       complete: () => { }

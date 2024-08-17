@@ -17,15 +17,16 @@ export class SidebarComponent {
   sidebarVisible!: boolean;
 
   private _router= inject(Router);
+  private _sidebarService= inject(SidebarService);
 
-  constructor(private sidebarService: SidebarService) {
-    this.sidebarService.getSidebarVisibility().subscribe((visible) => {
+  constructor() {
+    this._sidebarService.getSidebarVisibility().subscribe((visible) => {
       this.sidebarVisible = visible;
     });
   }
 
   toggleSidebar() {
-    this.sidebarService.toggleSidebar(false);
+    this._sidebarService.toggleSidebar(false);
   }
 
   navigate(path: string) {

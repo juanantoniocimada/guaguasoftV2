@@ -1,0 +1,31 @@
+<div class="container">
+
+  <p-floatLabel>
+    <input id="username" type="text"
+      class="p-inputtext-lg"
+      pInputText
+      [(ngModel)]="number" />
+    <label for="username">Número de línea</label>
+  </p-floatLabel>
+
+  <p-floatLabel>
+    <input id="username" type="text"
+      class="p-inputtext-lg"
+      pInputText
+      [(ngModel)]="description" />
+    <label for="username">Descripción línea</label>
+  </p-floatLabel>
+
+  <p-button
+    label="Crear"
+    [text]="true"
+    severity="secondary" (click)="createItem()"
+  />
+
+  <p-button
+    label="Editar"
+    [text]="true"
+    severity="secondary" (click)="updateItem()"
+  />
+
+</div>

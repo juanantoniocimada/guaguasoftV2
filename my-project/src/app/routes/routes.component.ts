@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
@@ -31,73 +31,77 @@ import { LoaderService } from '../services/loader.service';
 })
 export class RoutesComponent implements OnInit {
 
-  mode = 'determinate';
-
   routes: any[] = [];
   route: any;
 
-  constructor(
-    private itemService: RouteService,
-    private router: Router,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-    private loaderService: LoaderService
-
-  ) {
-
-  }
+  private _itemService  =inject(RouteService);
+  private _confirmationService  =inject(ConfirmationService);
+  private _messageService  =inject(MessageService);
+  private _loaderService  =inject(LoaderService);
+  private _router= inject(Router) ;
 
   ngOnInit(): void {
     this.getRoutes();
   }
 
   add() {
-
+    this._router.navigate(['/form-route']);
   }
 
-  confirm() {
+  deleteRoute(routeId: number) {
 
+    this.startLoading();
 
-    this.confirmationService.confirm({
+    this._itemService.deleteItem(routeId).subscribe({
+      next: (data: any) => {
+        this.stopLoading();
+
+        this._messageService.add({ severity: 'success', summary: 'Rejected', detail: 'Borrado correctamente', life: 3000 });
+
+        this.getRoutes();
+
+      },
+      error: (error: any) => {
+        this.stopLoading();
+        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
+      },
+      complete: () => { }
+    });
+  }
+
+  delete(id: number) {
+
+    this._confirmationService.confirm({
         header: `Borrar`,
-        message: '¿Quieres borrar la hora?.',
-        acceptIcon: 'pi pi-check mr-2',
-        rejectIcon: 'pi pi-times mr-2',
-        rejectButtonStyleClass: 'p-button-sm',
-        acceptButtonStyleClass: 'p-button-outlined p-button-sm',
         accept: () => {
-
+          this.deleteRoute(id);
         },
         reject: () => {
-            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'no se ha podido borrar', life: 3000 });
+            this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'no se ha podido borrar', life: 3000 });
         }
     });
   }
 
-  // Ejemplo de cómo mostrar el loader
   startLoading() {
-    this.loaderService.showIndeterminate();
+    this._loaderService.showIndeterminate();
   }
 
-  // Ejemplo de cómo ocultar el loader
   stopLoading() {
-    this.loaderService.hideLoader();
+    this._loaderService.hideLoader();
   }
 
   getRoutes(): void {
     this.startLoading();
 
-    this.itemService.getAllItems().subscribe({
+    this._itemService.getAllItems().subscribe({
       next: (data: any) => {
-        this.stopLoading();
         this.routes = data;
+        this.stopLoading();
 
       },
       error: (error: any) => {
-
         this.stopLoading();
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
-
+        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
       },
       complete: () => { }
     });

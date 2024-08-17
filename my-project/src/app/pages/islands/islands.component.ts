@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { IslandService } from '../../services/island.service';
 import { ButtonModule } from 'primeng/button';
@@ -30,52 +30,41 @@ import { LoaderService } from '../../services/loader.service';
 })
 export class IslandsComponent implements OnInit {
 
-  loaderState$ = this.loaderService.loaderState$;
+  loaderState$ = this._loaderService.loaderState$;
 
   products: any[] = [];
 
   islands: any[] = [];
   island: any;
 
-  mode = 'determinate';
+  private _itemService=  inject(IslandService);
+  private _router=  inject(Router);
+  private _confirmationService=  inject(ConfirmationService);
+  private _messageService=  inject(MessageService);
 
-  /*
-    indeterminate
-    determinate
-  */
+  constructor(private _loaderService:LoaderService) {
 
-
-
-  constructor(private itemService: IslandService,
-    private router: Router,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-    private loaderService: LoaderService
-  ) {
-
-  }
-
-  // Ejemplo de cómo mostrar el loader
-  startLoading() {
-    this.loaderService.showIndeterminate();
-  }
-
-  // Ejemplo de cómo ocultar el loader
-  stopLoading() {
-    this.loaderService.hideLoader();
   }
 
   ngOnInit(): void {
     this.getAllIslands();
   }
 
+  startLoading() {
+    this._loaderService.showIndeterminate();
+  }
+
+  stopLoading() {
+    this._loaderService.hideLoader();
+  }
+
   navigate(path: string, id?: number): void {
     // Si id está definido, navega a la ruta con el id
     if (id !== undefined) {
-      this.router.navigate([path, id]);
+      this._router.navigate([path, id]);
     } else {
       // Navega solo a la ruta sin id
-      this.router.navigate([path]);
+      this._router.navigate([path]);
     }
   }
 
@@ -83,7 +72,7 @@ export class IslandsComponent implements OnInit {
 
     this.startLoading();
 
-    this.itemService.getAllItems().subscribe({
+    this._itemService.getAllItems().subscribe({
       next: (data: any) => {
         console.log(data);
         this.islands = data;
@@ -91,7 +80,7 @@ export class IslandsComponent implements OnInit {
       },
       error: (error) => {
         this.stopLoading();
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
+        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
 
       },
       complete: () => { }
@@ -99,35 +88,28 @@ export class IslandsComponent implements OnInit {
   }
 
   confirm(id: number) {
-    this.confirmationService.confirm({
-        header: `Borrar ${id}`,
-        message: '¿Quieres borrar la isla?.',
-        acceptIcon: 'pi pi-check mr-2',
-        rejectIcon: 'pi pi-times mr-2',
-        rejectButtonStyleClass: 'p-button-sm',
-        acceptButtonStyleClass: 'p-button-outlined p-button-sm',
-        accept: () => {
-          this.deleteIsland(id);
-        },
-        reject: () => {
-            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-        }
+    this._confirmationService.confirm({
+      header: `Borrar ${id}`,
+      accept: () => {
+        this.deleteIsland(id);
+      },
+      reject: () => {
+          this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+      }
     });
-}
+  }
 
-  // Borrar una isla
   deleteIsland(id: number): void {
-    this.itemService.deleteItem(id).subscribe(() => {
+    this._itemService.deleteItem(id).subscribe(() => {
       this.islands = this.islands.filter(island => island.id !== id);
 
       this.getAllIslands();
-
       this.show();
 
     });
   }
 
   show() {
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
+    this._messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
   }
 }

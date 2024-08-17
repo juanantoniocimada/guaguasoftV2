@@ -19,19 +19,15 @@ import { LoaderService } from '../../services/loader.service';
 })
 export class NavbarComponent {
 
-  sidebarVisible$ = this.sidebarService.getSidebarVisibility();
+  private _loaderService= inject(LoaderService);
+  private _sidebarService= inject(SidebarService);
+
+  sidebarVisible$ = this._sidebarService.getSidebarVisibility();
 
   mode = 'determinate';
 
-  constructor(private loaderService: LoaderService,
-    private sidebarService: SidebarService
-  ) {
-    // Suscribirse al estado del loader y actualizar `mode`
-    this.loaderService.loaderState$.subscribe((state) => {
-
-      console.log(state);
-
-
+  constructor() {
+    this._loaderService.loaderState$.subscribe((state) => {
       this.mode = state;
     });
   }
@@ -49,7 +45,6 @@ export class NavbarComponent {
   }
 
   toggleSidebar() {
-    this.sidebarService.toggleSidebar(true);
+    this._sidebarService.toggleSidebar(true);
   }
-
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { IslandService } from '../../../services/island.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -32,35 +32,23 @@ export class IslandComponent implements OnInit {
   id: string | undefined;
   name: string | undefined;
 
-  constructor(private itemService: IslandService,
-    private router: Router,
-    private route: ActivatedRoute,
-  ) {
-
-  }
+  private itemService=  inject(IslandService);
+  private router=  inject(Router);
+  private route=  inject(ActivatedRoute);
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-
-      console.log(params);
-
-
-        const id = params.get('id');
-        if (id) {
-          this.getIslandById(id)
-        }
-
+      const id = params.get('id');
+      if (id) {
+        this.getIslandById(id)
+      }
     });
   }
 
-  // Obtener una isla por ID
   getIslandById(id: string): void {
-
-
 
     this.itemService.getItemById(id).subscribe((data: any) => {
       this.island = data;
-
 
       this.id = this.island.island_id
       this.name = this.island.name
@@ -68,7 +56,6 @@ export class IslandComponent implements OnInit {
     });
   }
 
-  // Agregar una nueva isla
   addIsland(): void {
 
     const newIsland = {
@@ -83,7 +70,6 @@ export class IslandComponent implements OnInit {
     });
   }
 
-  // Actualizar una isla existente
   updateIsland(id: number): void {
 
     const newIsland = {
@@ -91,10 +77,7 @@ export class IslandComponent implements OnInit {
     }
 
     this.itemService.updateItem(id, newIsland).subscribe((data: any) => {
-        console.log(data);
-
-        this.router.navigate(['/islands']);
-
+      this.router.navigate(['/islands']);
     });
   }
 

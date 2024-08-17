@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { HourService } from '../../services/hour.service';
@@ -40,28 +40,12 @@ export class HoursComponent implements OnInit {
   routes: any[] = [];
   route: any;
 
+  hours: any[] = [];
 
-  hours: any[] = [
-
-  ];
-
-
-  mode = 'determinate';
-
-  /*
-    indeterminate
-    determinate
-  */
-
-  constructor(
-    private routeService: RouteService,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-    private loaderService: LoaderService
-
-  ) {
-
-  }
+  private _routeService= inject(RouteService);
+  private _confirmationService= inject(ConfirmationService);
+  private _messageService= inject(MessageService);
+  private _loaderService= inject(LoaderService);
 
   ngOnInit(): void {
     this.getRoutes();
@@ -73,29 +57,19 @@ export class HoursComponent implements OnInit {
 
   confirm(hour: any) {
 
-    console.log(hour);
-
-    this.confirmationService.confirm({
-        header: `Borrar ${hour.value} de la linea nº ${hour.number}`,
-        message: '¿Quieres borrar la hora?.',
-        acceptIcon: 'pi pi-check mr-2',
-        rejectIcon: 'pi pi-times mr-2',
-        rejectButtonStyleClass: 'p-button-sm',
-        acceptButtonStyleClass: 'p-button-outlined p-button-sm',
+    this._confirmationService.confirm({
+        header: `Borrar`,
         accept: () => {
           this.deleteHour(hour.routes_id, hour.hours_id);
           this.getHours(hour.routes_id)
         },
         reject: () => {
-            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'no se ha podido borrar', life: 3000 });
+            this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'no se ha podido borrar', life: 3000 });
         }
     });
   }
 
   onOptionChange(event: any): void {
-
-    console.log('Description:', event.value.id);
-
     this.getHours(event.value.id)
   }
 
@@ -103,37 +77,35 @@ export class HoursComponent implements OnInit {
 
     this.startLoading();
 
-    this.routeService.deleteHour(routeId, hourId).subscribe({
+    this._routeService.deleteHour(routeId, hourId).subscribe({
       next: (data: any) => {
 
         this.stopLoading();
 
-        this.messageService.add({ severity: 'success', summary: 'Rejected', detail: 'Borrado correctamente', life: 3000 });
+        this._messageService.add({ severity: 'success', summary: 'Rejected', detail: 'Borrado correctamente', life: 3000 });
 
       },
       error: (error: any) => {
         this.stopLoading();
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
+        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
       },
       complete: () => { }
     });
   }
 
-  // Ejemplo de cómo mostrar el loader
   startLoading() {
-    this.loaderService.showIndeterminate();
+    this._loaderService.showIndeterminate();
   }
 
-  // Ejemplo de cómo ocultar el loader
   stopLoading() {
-    this.loaderService.hideLoader();
+    this._loaderService.hideLoader();
   }
 
   getHours(idRoute: any) {
 
     this.startLoading();
 
-    this.routeService.getHoursByRoute(idRoute).subscribe({
+    this._routeService.getHoursByRoute(idRoute).subscribe({
       next: (data: any) => {
         this.hours = data;
         this.stopLoading();
@@ -141,7 +113,7 @@ export class HoursComponent implements OnInit {
       error: (error: any) => {
 
         this.stopLoading();
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
+        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
 
       },
       complete: () => { }
@@ -149,16 +121,16 @@ export class HoursComponent implements OnInit {
   }
 
   getRoutes(): void {
-    this.mode = 'indeterminate';
+    this.startLoading();
 
-    this.routeService.getAllItems().subscribe({
+    this._routeService.getAllItems().subscribe({
       next: (data: any) => {
         this.routes = data;
         this.stopLoading();
       },
       error: (error: any) => {
         this.stopLoading();
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
+        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
       },
       complete: () => { }
     });

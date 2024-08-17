@@ -1,5 +1,5 @@
 <p-button
-  label="Añadir parada a linea"
+  label="Añadir ruta"
   icon="pi pi-check" [outlined]="true"
   severity="warning"
   (click)="add()">
@@ -20,11 +20,21 @@
         <td>{{ route.description }}</td>
         <td>
 
-          <p-button (click)="confirm()" icon="pi pi-trash" severity="warning" />
           <p-button icon="pi pi-file-edit" severity="help" />
+          <p-button (click)="delete(route.id)" icon="pi pi-trash" severity="warning" />
 
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
+
+<p-toast />
+
+<p-confirmDialog>
+  <ng-template pTemplate="message" let-message>
+    <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+      <p>{{ message.message }}</p>
+    </div>
+  </ng-template>
+</p-confirmDialog>
