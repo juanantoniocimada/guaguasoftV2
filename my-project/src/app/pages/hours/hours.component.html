@@ -1,15 +1,18 @@
-<h1>
-  Gestión de horas | lineas
-</h1>
 
-<p-button class="navbar__button navbar__button--logout" label="Añadir hora a linea" icon="pi pi-check" [outlined]="true"
-  severity="warning" (click)="add()">
-</p-button>
-
-<p-dropdown [options]="routes" [(ngModel)]="route" optionLabel="description" (onChange)="onOptionChange($event)"
-  placeholder="selecciona una ruta" />
 
 <div class="card">
+
+  <h1>
+    Gestión de horas | lineas
+  </h1>
+
+  <p-button class="navbar__button navbar__button--logout" label="Añadir hora a linea" icon="pi pi-check" [outlined]="true"
+    severity="warning" (click)="add()">
+  </p-button>
+
+  <p-dropdown [options]="routes" [(ngModel)]="route" optionLabel="description" (onChange)="onOptionChange($event)"
+    placeholder="selecciona una ruta" />
+
   <p-table [value]="hours" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
       <tr>
@@ -75,14 +78,12 @@
           </span>
         </td>
 
-
-
         <td>{{ hour.description }}</td>
         <td>{{ hour.number }}</td>
 
         <td>
           <p-button (click)="confirm(hour)" icon="pi pi-trash" severity="warning" />
-          <p-button icon="pi pi-file-edit" severity="help" />
+          <p-button (click)="edit(hour)" icon="pi pi-file-edit" severity="help" />
         </td>
       </tr>
     </ng-template>

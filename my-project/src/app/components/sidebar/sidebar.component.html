@@ -1,24 +1,15 @@
 <p-sidebar class="sidebar" [(visible)]="sidebarVisible" [style]="{ width: '250px' }">
 
-  <p-button
-      class="sidebar__button"
-      label="lines" [text]="true"
-      severity="secondary" (click)="navigate('/lines')" />
-  <br>
-  <p-button
-      class="sidebar__button"
-      label="localizaciones" [text]="true"
-      severity="secondary" (click)="navigate('/locations')" />
-  <br>
-  <p-button
-      class="sidebar__button"
-      label="islas" [text]="true"
-      severity="secondary" (click)="navigate('/islands')" />
-  <br>
-  <p-button
-      class="sidebar__button"
-      label="horas" [text]="true"
-      severity="secondary" (click)="navigate('/hours')" />
-  <br>
+  <div class="container">
+
+    <p-button (click)="navigate('/lines')" class="container__button" label="lines" [outlined]="true" severity="warning" />
+
+    <p-button (click)="navigate('/hours')" class="container__button" label="horas" [outlined]="true" severity="warning" />
+
+    <p-button (click)="navigate('/islands')" class="container__button" label="islas" [outlined]="true" severity="warning"  />
+
+    <p-button (click)="navigate('/locations')" class="container__button" label="localizaciones" [outlined]="true" severity="warning" />
+
+  </div>
 
 </p-sidebar>

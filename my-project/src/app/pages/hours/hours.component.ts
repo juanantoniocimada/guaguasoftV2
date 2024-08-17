@@ -1,5 +1,4 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { HourService } from '../../services/hour.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -12,6 +11,7 @@ import { RouteService } from '../../services/route.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { LoaderService } from '../../services/loader.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hours',
@@ -46,13 +46,10 @@ export class HoursComponent implements OnInit {
   private _confirmationService= inject(ConfirmationService);
   private _messageService= inject(MessageService);
   private _loaderService= inject(LoaderService);
+  private _router= inject(Router) ;
 
   ngOnInit(): void {
     this.getRoutes();
-  }
-
-  add() {
-
   }
 
   confirm(hour: any) {
@@ -99,6 +96,14 @@ export class HoursComponent implements OnInit {
 
   stopLoading() {
     this._loaderService.hideLoader();
+  }
+
+  add() {
+    this._router.navigate(['/form-hour'], { queryParams: { edit: false, id: 0 } });
+  }
+
+  edit(hour: any) {
+    this._router.navigate(['/form-hour'], { queryParams: { edit: true, id: hour.id } });
   }
 
   getHours(idRoute: any) {

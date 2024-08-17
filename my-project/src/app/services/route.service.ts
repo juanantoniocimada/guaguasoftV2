@@ -22,19 +22,9 @@ export class RouteService {
     return this._http.get<any>(`${this._apiUrl}/${id}`);
   }
 
-  // route/7/hours
-  getHoursByRoute(routeId: string): Observable<any> {
-    return this._http.get<any>(`${this._apiUrl}/${routeId}/hours`);
-  }
-
   // route/20/locations
   getLocationsByRoute(routeId: string): Observable<any> {
     return this._http.get<any>(`${this._apiUrl}/${routeId}/locations`);
-  }
-
-  // route/7/hour/23
-  deleteHour(routeId: string, hourId: string): Observable<any> {
-    return this._http.delete<any>(`${this._apiUrl}/${routeId}/hour/${hourId}`);
   }
 
   // POST para insertar una nueva entidad
@@ -43,12 +33,37 @@ export class RouteService {
   }
 
   // PUT para modificar una entidad existente
-  updateItem(id: number, item: any): Observable<any> {
+  updateItem(id: string, item: any): Observable<any> {
     return this._http.put<any>(`${this._apiUrl}/${id}`, item);
   }
 
   // DELETE para borrar una entidad por ID
   deleteItem(id: number): Observable<any> {
     return this._http.delete<any>(`${this._apiUrl}/${id}`);
+  }
+
+  // route/7/hours
+  getHoursByRoute(routeId: string): Observable<any> {
+    return this._http.get<any>(`${this._apiUrl}/${routeId}/hours`);
+  }
+
+  // routev2/16
+  getHourByHoursRoutesId(id: string): Observable<any> {
+    return this._http.get<any>(`${this._apiUrl}v2/${id}`);
+  }
+
+  // route/7/hour/23
+  postHour(routeId: string, hourId: string, item: any): Observable<any> {
+    return this._http.post<any>(`${this._apiUrl}/${routeId}/hour/${hourId}`, item);
+  }
+
+  // route/7/hour/23
+  putHour(routeId: string, hourId: string, item: any): Observable<any> {
+    return this._http.put<any>(`${this._apiUrl}/${routeId}/hour/${hourId}`, item);
+  }
+
+  // route/7/hour/23
+  deleteHour(routeId: string, hourId: string): Observable<any> {
+    return this._http.delete<any>(`${this._apiUrl}/${routeId}/hour/${hourId}`);
   }
 }

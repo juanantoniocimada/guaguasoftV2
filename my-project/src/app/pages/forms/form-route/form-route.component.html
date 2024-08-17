@@ -16,16 +16,20 @@
     <label for="username">Descripción línea</label>
   </p-floatLabel>
 
+</div>
+
+<div class="footer-fixed">
   <p-button
+    *ngIf="!edit"
     label="Crear"
-    [text]="true"
-    severity="secondary" (click)="createItem()"
+    [raised]="true"
+    (click)="createItem()"
   />
 
   <p-button
+    *ngIf="edit"
     label="Editar"
-    [text]="true"
-    severity="secondary" (click)="updateItem()"
+    [raised]="true"
+    (click)="updateItem()"
   />
-
 </div>

@@ -1,0 +1,113 @@
+<h1 *ngIf="!edit">
+  Añadir hora a línea
+</h1>
+
+<h1 *ngIf="edit">
+  Editar hora de la línea
+</h1>
+
+<div class="container">
+
+  <p-dropdown
+    [disabled]="edit"
+    [options]="routes"
+    [(ngModel)]="route"
+    optionLabel="description"
+    placeholder="selecciona una ruta"
+  />
+
+  <p-dropdown
+    [disabled]="edit"
+    [options]="hours"
+    [(ngModel)]="hour"
+    optionLabel="value"
+    placeholder="selecciona una hora"
+  />
+
+  <p-button *ngIf="!edit" label="crear hora nueva" (onClick)="showCustomHour = true" />
+
+  <div *ngIf="showCustomHour" class="custom-hour">
+    <input
+      type="text"
+      class="p-inputtext"
+      pInputText
+      [(ngModel)]="customHour"
+    />
+    <p-button icon="pi pi-check" size="small" (onClick)="addCustomHour()" />
+
+  </div>
+
+
+  <p-checkbox
+    [(ngModel)]="festive"
+    label="festive"
+    [binary]="true"
+    inputId="binary"
+  />
+
+  <p-checkbox
+    [(ngModel)]="monday"
+    [binary]="true"
+    label="monday"
+    inputId="binary"
+  />
+
+  <p-checkbox
+    [(ngModel)]="tuesday"
+    label="tuesday"
+    [binary]="true"
+    inputId="binary"
+  />
+
+  <p-checkbox
+    [(ngModel)]="wednesday"
+    label="wednesday"
+    [binary]="true"
+    inputId="binary"
+  />
+
+  <p-checkbox
+    [(ngModel)]="thursday"
+    label="thursday"
+    [binary]="true"
+    inputId="binary"
+  />
+
+  <p-checkbox
+    [(ngModel)]="friday"
+    label="friday"
+    [binary]="true"
+    inputId="binary"
+  />
+
+  <p-checkbox
+    [(ngModel)]="saturday"
+    label="saturday"
+    [binary]="true"
+    inputId="binary"
+  />
+
+  <p-checkbox
+    [(ngModel)]="sunday"
+    label="sunday"
+    [binary]="true"
+    inputId="binary"
+  />
+
+</div>
+
+<div class="footer-fixed">
+  <p-button
+    *ngIf="!edit"
+    label="Crear"
+    [raised]="true"
+    (click)="createItem()"
+  />
+
+  <p-button
+    *ngIf="edit"
+    label="Editar"
+    [raised]="true"
+    (click)="updateItem()"
+  />
+</div>

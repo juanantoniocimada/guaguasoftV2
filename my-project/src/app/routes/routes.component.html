@@ -1,11 +1,15 @@
-<p-button
-  label="Añadir ruta"
-  icon="pi pi-check" [outlined]="true"
-  severity="warning"
-  (click)="add()">
 
-</p-button>
 <div class="card">
+
+  <p-button
+    label="Añadir ruta"
+    icon="pi pi-check" [outlined]="true"
+    severity="warning"
+    (click)="add()"
+  >
+
+  </p-button>
+
   <p-table [value]="routes" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
       <tr>
@@ -20,7 +24,7 @@
         <td>{{ route.description }}</td>
         <td>
 
-          <p-button icon="pi pi-file-edit" severity="help" />
+          <p-button (click)="edit(route.id)" icon="pi pi-file-edit" severity="help" />
           <p-button (click)="delete(route.id)" icon="pi pi-trash" severity="warning" />
 
         </td>

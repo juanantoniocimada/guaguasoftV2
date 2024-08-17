@@ -2,23 +2,17 @@
 
   <p-button
     icon="{{ (sidebarVisible$ | async) ? 'pi pi-chevron-left' : 'pi pi-chevron-right' }}"
-    styleClass="toggle-btn"
     (click)="toggleSidebar()"
   >
   </p-button>
 
-  <p-button class="navbar__button" label="lines" [text]="true" severity="secondary"
+  <p-button class="navbar__button" label="lines"
   (click)="navigate('/lines')"></p-button>
 
-  <p-button class="navbar__button" label="lines" [text]="true" severity="secondary"
-    (click)="navigate('/lines')"></p-button>
-
-  <p-button class="navbar__button" label="localizaciones" [text]="true" severity="secondary"
+  <p-button class="navbar__button" label="localizaciones"
     (click)="navigate('/locations')"></p-button>
 
-  <p-button class="navbar__button navbar__button--logout" label="Salir" [text]="true" severity="danger"
-    (click)="logout()"></p-button>
-
+  <p-button icon="pi pi-power-off" class="navbar__button--logout" severity="warning" />
 
 </div>
 

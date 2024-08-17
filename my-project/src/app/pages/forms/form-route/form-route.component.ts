@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { LoaderService } from '../../../services/loader.service';
@@ -7,7 +7,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { InputTextModule } from 'primeng/inputtext';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -19,26 +20,59 @@ import { Router } from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    InputTextModule
+    InputTextModule,
+    CommonModule
   ],
   providers:[
     RouteService,
     MessageService,
     ConfirmationService,
-    LoaderService
+    LoaderService,
   ],
   templateUrl: './form-route.component.html',
   styleUrl: './form-route.component.scss'
 })
-export class FormRouteComponent {
+export class FormRouteComponent implements OnInit {
 
   private _loaderService= inject(LoaderService);
   private _itemService  =inject(RouteService);
   private _messageService= inject(MessageService);
   private _router= inject(Router) ;
+  private _activatedRoute= inject(ActivatedRoute) ;
+
+  public edit!: boolean;
+  public id!: string;
 
   public number!: number;
   public description = '';
+
+  ngOnInit(): void {
+
+    this._activatedRoute.queryParams.subscribe(params => {
+
+      this.edit = this.parseBoolean(params['edit']);
+      this.id = params['id'];
+
+      if(this.edit) {
+        this.getRouteById(params['id'])
+      }
+    });
+  }
+
+  parseBoolean(value: string): boolean {
+    return value === 'true';
+  }
+
+  getRouteById(id: string): void {
+
+    this._itemService.getItemById(id).subscribe((data: any) => {
+
+      this.id = data.id;
+      this.number = data.number;
+      this.description = data.description;
+
+    });
+  }
 
   startLoading() {
     this._loaderService.showIndeterminate();
@@ -75,14 +109,13 @@ export class FormRouteComponent {
   updateItem(): void {
     this.startLoading();
 
-    // this.route
 
     const item = {
       number: this.number,
       description: this.description
     };
 
-    this._itemService.updateItem(12, item).subscribe({
+    this._itemService.updateItem(this.id, item).subscribe({
       next: (data: any) => {
 
         this.stopLoading();

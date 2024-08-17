@@ -45,7 +45,11 @@ export class RoutesComponent implements OnInit {
   }
 
   add() {
-    this._router.navigate(['/form-route']);
+    this._router.navigate(['/form-route'], { queryParams: { edit: false, id: 0 } });
+  }
+
+  edit(routeId: number) {
+    this._router.navigate(['/form-route'], { queryParams: { edit: true, id: routeId } });
   }
 
   deleteRoute(routeId: number) {
@@ -70,15 +74,14 @@ export class RoutesComponent implements OnInit {
   }
 
   delete(id: number) {
-
     this._confirmationService.confirm({
-        header: `Borrar`,
-        accept: () => {
-          this.deleteRoute(id);
-        },
-        reject: () => {
-            this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'no se ha podido borrar', life: 3000 });
-        }
+      header: `Borrar`,
+      accept: () => {
+        this.deleteRoute(id);
+      },
+      reject: () => {
+          this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'no se ha podido borrar', life: 3000 });
+      }
     });
   }
 

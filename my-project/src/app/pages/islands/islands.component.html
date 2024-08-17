@@ -1,9 +1,11 @@
-<div>
-  <p-button (click)="navigate('/island')" class="" label="añadir isla" [text]="true" severity="secondary">
-  </p-button>
-</div>
 
 <div class="card">
+
+  <div>
+    <p-button (click)="navigate('/island')" class="" label="añadir isla" [text]="true" severity="secondary">
+    </p-button>
+  </div>
+
   <p-table [value]="islands" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
       <tr>

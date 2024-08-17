@@ -1,8 +1,11 @@
 
-.sidebar {
+.container {
+
+  display: flex;
+  flex-direction: column;
 
   &__button {
-    border: 1px solid pink;
-
+    margin-top: 1em;
+    margin-bottom: 1em;
   }
 }

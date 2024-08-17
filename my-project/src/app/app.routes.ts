@@ -5,10 +5,16 @@ import { RoutesComponent } from './routes/routes.component';
 import { IslandsComponent } from './pages/islands/islands.component';
 import { HoursComponent } from './pages/hours/hours.component';
 import { FormRouteComponent } from './pages/forms/form-route/form-route.component';
+import { FormHourComponent } from './pages/forms/form-hour/form-hour.component';
 
 export const routes: Routes = [
   { path: 'lines', component: RoutesComponent },
+
   { path: 'form-route', component: FormRouteComponent },
+  { path: 'form-route/:id', component: FormRouteComponent },
+
+  { path: 'form-hour', component: FormHourComponent },
+  { path: 'form-hour/:id', component: FormHourComponent },
 
   { path: 'locations', component: LocationsComponent },
 
