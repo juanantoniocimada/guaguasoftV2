@@ -52,18 +52,33 @@ export class RouteService {
     return this._http.get<any>(`${this._apiUrl}v2/${id}`);
   }
 
-  // route/7/hour/23
+  // routev3/16
+  getLocationByLocationsRoutesId(id: string): Observable<any> {
+    return this._http.get<any>(`${this._apiUrl}v3/${id}`);
+  }
+
+  // route/7/location/23
   postHour(routeId: string, hourId: string, item: any): Observable<any> {
     return this._http.post<any>(`${this._apiUrl}/${routeId}/hour/${hourId}`, item);
   }
 
+  // route/27/location/17
+  postLocation(routeId: string, hourId: string, item: any): Observable<any> {
+    return this._http.post<any>(`${this._apiUrl}/${routeId}/location/${hourId}`, item);
+  }
+
   // route/7/hour/23
-  putHour(routeId: string, hourId: string, item: any): Observable<any> {
-    return this._http.put<any>(`${this._apiUrl}/${routeId}/hour/${hourId}`, item);
+  putHour(id: string, item: any): Observable<any> {
+    return this._http.put<any>(`${this._apiUrl}v3/${id}`, item);
   }
 
   // route/7/hour/23
   deleteHour(routeId: string, hourId: string): Observable<any> {
     return this._http.delete<any>(`${this._apiUrl}/${routeId}/hour/${hourId}`);
+  }
+
+  // route/7/location/23
+  deleteLocation(id: any): Observable<any> {
+    return this._http.delete<any>(`${this._apiUrl}v3/${id}`);
   }
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { HourService } from '../../services/hour.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
@@ -27,7 +26,6 @@ import { Router } from '@angular/router';
     HttpClientModule
   ],
   providers:[
-    HourService,
     RouteService,
     MessageService,
     ConfirmationService

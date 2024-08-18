@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { LoaderService } from '../../../services/loader.service';
 import { RouteService } from '../../../services/route.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -11,7 +11,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { HourService } from '../../../services/hour.service';
 import { CheckboxModule } from 'primeng/checkbox';
-import { log } from 'console';
 
 @Component({
   selector: 'app-form-hour',
@@ -36,7 +35,7 @@ import { log } from 'console';
   templateUrl: './form-hour.component.html',
   styleUrl: './form-hour.component.scss'
 })
-export class FormHourComponent {
+export class FormHourComponent implements OnInit {
 
   private _loaderService= inject(LoaderService);
   private _messageService= inject(MessageService);
@@ -74,25 +73,6 @@ export class FormHourComponent {
 
       this.edit = this.parseBoolean(params['edit']);
       this.id = params['id'];
-
-      console.log(params);
-
-/*       {
-        "value": "05:15:00",
-        "id": "16",
-        "routes_id": "20",
-        "hours_id": "42",
-        "monday": "1",
-        "tuesday": "1",
-        "wednesday": "1",
-        "thursday": "1",
-        "friday": "1",
-        "saturday": "1",
-        "sunday": "1",
-        "festive": "1",
-        "description": "Puerto del Rosario – Gran Tarajal",
-        "number": "16"
-    } */
 
       if(this.edit) {
         this.getHourByHoursRoutesId(params['id'], params)
@@ -216,7 +196,7 @@ export class FormHourComponent {
       sunday: this.sunday
     };
 
-    this._routeService.putHour(this.route.id, this.hour.id, item).subscribe({
+    this._routeService.putHour(this.id, item).subscribe({
       next: (data: any) => {
 
         this.stopLoading();

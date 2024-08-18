@@ -6,6 +6,7 @@ import { IslandsComponent } from './pages/islands/islands.component';
 import { HoursComponent } from './pages/hours/hours.component';
 import { FormRouteComponent } from './pages/forms/form-route/form-route.component';
 import { FormHourComponent } from './pages/forms/form-hour/form-hour.component';
+import { FormLocationComponent } from './pages/forms/form-location/form-location.component';
 
 export const routes: Routes = [
   { path: 'lines', component: RoutesComponent },
@@ -15,6 +16,9 @@ export const routes: Routes = [
 
   { path: 'form-hour', component: FormHourComponent },
   { path: 'form-hour/:id', component: FormHourComponent },
+
+  { path: 'form-location', component: FormLocationComponent },
+  { path: 'form-location/:id', component: FormLocationComponent },
 
   { path: 'locations', component: LocationsComponent },
 

@@ -1,0 +1,122 @@
+<h1 *ngIf="!edit">
+  Añadir localización a línea
+</h1>
+
+<h1 *ngIf="edit">
+  Editar localización de la línea
+</h1>
+
+<div class="container">
+
+  <p-dropdown
+    [disabled]="edit"
+    [options]="routes"
+    [(ngModel)]="route"
+    optionLabel="description"
+    placeholder="selecciona una ruta"
+  />
+
+  <p-dropdown
+    [disabled]="edit"
+    [options]="locations"
+    [(ngModel)]="location"
+    optionLabel="description"
+    placeholder="selecciona una localización"
+  />
+
+  <p-dropdown
+    [disabled]="edit"
+    [options]="[
+      'origin',
+      'destination',
+      'stop'
+    ]"
+    [(ngModel)]="type"
+    placeholder="tipo localizacion"
+  />
+
+  <p-floatLabel>
+    <input type="number"
+      [disabled]="edit"
+      class="p-inputtext"
+      pInputText
+      [(ngModel)]="position" />
+    <label for="username">Posición localización</label>
+  </p-floatLabel>
+
+</div>
+
+<div class="container">
+  <p-checkbox
+    [(ngModel)]="festive"
+    label="festive"
+    [binary]="true"
+    inputId="binary"
+  />
+
+  <p-checkbox
+    [(ngModel)]="monday"
+    [binary]="true"
+    label="monday"
+    inputId="binary"
+  />
+
+  <p-checkbox
+    [(ngModel)]="tuesday"
+    label="tuesday"
+    [binary]="true"
+    inputId="binary"
+  />
+
+  <p-checkbox
+    [(ngModel)]="wednesday"
+    label="wednesday"
+    [binary]="true"
+    inputId="binary"
+  />
+
+  <p-checkbox
+    [(ngModel)]="thursday"
+    label="thursday"
+    [binary]="true"
+    inputId="binary"
+  />
+
+  <p-checkbox
+    [(ngModel)]="friday"
+    label="friday"
+    [binary]="true"
+    inputId="binary"
+  />
+
+  <p-checkbox
+    [(ngModel)]="saturday"
+    label="saturday"
+    [binary]="true"
+    inputId="binary"
+  />
+
+  <p-checkbox
+    [(ngModel)]="sunday"
+    label="sunday"
+    [binary]="true"
+    inputId="binary"
+  />
+
+</div>
+
+<div class="footer-fixed">
+  <p-button
+    *ngIf="!edit"
+    label="Crear"
+    [raised]="true"
+    (click)="createItem()"
+  />
+
+  <p-button
+    *ngIf="edit"
+    label="Editar"
+    [raised]="true"
+    (click)="updateItem()"
+  />
+</div>

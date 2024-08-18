@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { StepsModule } from 'primeng/steps';
 import { HttpClientModule } from '@angular/common/http';
 import { LoaderService } from '../../services/loader.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-locations',
@@ -44,6 +45,8 @@ export class LocationsComponent {
   private _routeService= inject(RouteService);
   private _messageService= inject(MessageService);
   private _loaderService= inject(LoaderService);
+  private _confirmationService= inject(ConfirmationService);
+  private _router= inject(Router);
 
   activeIndex: number = 0;
 
@@ -55,14 +58,49 @@ export class LocationsComponent {
   }
 
   add() {
-
+    this._router.navigate(['/form-location'], { queryParams: { edit: false, id: 0 } });
   }
 
-  onActiveIndexChange(event: number) {
-    this.activeIndex = event;
-    this.location =
-    this.locations[event]
+  edit(location: any) {
 
+    console.log(location);
+
+    this._router.navigate(['/form-location'], { queryParams: { edit: true, id: location['locations-routes-id'] } });
+  }
+
+  confirm(location: any) {
+
+    this._confirmationService.confirm({
+        header: `Borrar`,
+        accept: () => {
+          this.deleteLocation(location['locations-routes-id']);
+          this.getLocations(location.routes_id)
+        },
+        reject: () => {
+            this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'no se ha podido borrar', life: 3000 });
+        }
+    });
+  }
+
+  deleteLocation(id: any) {
+
+    this.startLoading();
+
+    this._routeService.deleteLocation(id).subscribe({
+      next: (data: any) => {
+
+        this.stopLoading();
+        // this.getLocations(routeId);
+
+        this._messageService.add({ severity: 'success', summary: 'Rejected', detail: 'Borrado correctamente', life: 3000 });
+
+      },
+      error: (error: any) => {
+        this.stopLoading();
+        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
+      },
+      complete: () => { }
+    });
   }
 
   getLocations(idRoute: any) {
