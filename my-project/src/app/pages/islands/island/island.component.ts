@@ -63,10 +63,7 @@ export class IslandComponent implements OnInit {
     }
 
     this.itemService.createItem(newIsland).subscribe((data: any) => {
-        console.log(data);
-
-        this.router.navigate(['/islands']);
-
+      this.router.navigate(['/islands']);
     });
   }
 

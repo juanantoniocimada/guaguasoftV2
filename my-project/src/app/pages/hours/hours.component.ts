@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { LoaderService } from '../../services/loader.service';
 import { Router } from '@angular/router';
+import { HoursRoutesService } from '../../services/hours-routes.service';
 
 @Component({
   selector: 'app-hours',
@@ -28,7 +29,8 @@ import { Router } from '@angular/router';
   providers:[
     RouteService,
     MessageService,
-    ConfirmationService
+    ConfirmationService,
+    HoursRoutesService
   ],
   templateUrl: './hours.component.html',
   styleUrl: './hours.component.scss'
@@ -40,6 +42,7 @@ export class HoursComponent implements OnInit {
 
   hours: any[] = [];
 
+  private _hoursRoutesService= inject(HoursRoutesService);
   private _routeService= inject(RouteService);
   private _confirmationService= inject(ConfirmationService);
   private _messageService= inject(MessageService);
@@ -72,7 +75,7 @@ export class HoursComponent implements OnInit {
 
     this.startLoading();
 
-    this._routeService.deleteHour(routeId, hourId).subscribe({
+    this._hoursRoutesService.deleteHour(routeId, hourId).subscribe({
       next: (data: any) => {
 
         this.stopLoading();
@@ -108,7 +111,7 @@ export class HoursComponent implements OnInit {
 
     this.startLoading();
 
-    this._routeService.getHoursByRoute(idRoute).subscribe({
+    this._hoursRoutesService.getHoursByRoute(idRoute).subscribe({
       next: (data: any) => {
         this.hours = data;
         this.stopLoading();

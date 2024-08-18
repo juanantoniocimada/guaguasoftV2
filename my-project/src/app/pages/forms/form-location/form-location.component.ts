@@ -12,7 +12,8 @@ import { LoaderService } from '../../../services/loader.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from '../../../services/location.service';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { log } from 'console';
+import { LocationsRoutesService } from '../../../services/locations-routes.service';
+import { HoursRoutesService } from '../../../services/hours-routes.service';
 
 @Component({
   selector: 'app-form-location',
@@ -34,18 +35,20 @@ import { log } from 'console';
     ConfirmationService,
     LoaderService,
     LocationService,
+    LocationsRoutesService
   ],
   templateUrl: './form-location.component.html',
   styleUrl: './form-location.component.scss',
 })
 export class FormLocationComponent implements OnInit {
+
   private _loaderService = inject(LoaderService);
   private _messageService = inject(MessageService);
   private _router = inject(Router);
   private _activatedRoute = inject(ActivatedRoute);
-
   private _routeService = inject(RouteService);
   private _locationService = inject(LocationService);
+  private _locationsRoutesService = inject(LocationsRoutesService);
 
   public festive: boolean = false;
   public monday: boolean = false;
@@ -71,30 +74,6 @@ export class FormLocationComponent implements OnInit {
     this._activatedRoute.queryParams.subscribe((params) => {
       this.edit = this.parseBoolean(params['edit']);
       this.id = params['id'];
-
-      console.log(params);
-
-      /*
-        {
-          "id": "3",
-          "description": "Estacion Puerto",
-          "preferred_stop": "1",
-          "internal_name_tiadhe": "999 Estacion Puerto",
-          "municipalities_id": "5",
-          "locations_id": "3",
-          "routes_id": "20",
-          "festive": "1",
-          "monday": "0",
-          "tuesday": "1",
-          "wednesday": "1",
-          "thursday": "0",
-          "friday": "1",
-          "saturday": "0",
-          "sunday": "1",
-          "position": "1",
-          "type": "origin"
-        }
-      */
 
       if (this.edit) {
         this.getLocationByLocationsRoutesId(params['id'], params);
@@ -148,11 +127,8 @@ export class FormLocationComponent implements OnInit {
   getLocationByLocationsRoutesId(id: string, params: any): void {
     this.startLoading();
 
-    this._routeService.getLocationByLocationsRoutesId(id).subscribe({
+    this._locationsRoutesService.getLocationByLocationsRoutesId(id).subscribe({
       next: (data: any) => {
-        console.log('data');
-
-        console.log(data);
 
         this.festive = this.parseBoolean(data.festive);
         this.monday = this.parseBoolean(data.monday);
@@ -209,7 +185,6 @@ export class FormLocationComponent implements OnInit {
 
     this._locationService.getAllItems().subscribe({
       next: (data: any) => {
-        console.log(data);
 
         this.locations = data;
         this.stopLoading();
@@ -241,8 +216,8 @@ export class FormLocationComponent implements OnInit {
       sunday: this.sunday,
     };
 
-    this._routeService
-      .putHour(this.id, item)
+    this._locationsRoutesService
+      .putLocation(this.id, item)
       .subscribe({
         next: (data: any) => {
           this.stopLoading();
@@ -278,7 +253,7 @@ export class FormLocationComponent implements OnInit {
       type: this.type,
     };
 
-    this._routeService
+    this._locationsRoutesService
       .postLocation(this.route.id, this.location.id, item)
       .subscribe({
         next: (data: any) => {

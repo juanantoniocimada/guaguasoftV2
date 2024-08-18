@@ -74,7 +74,6 @@ export class IslandsComponent implements OnInit {
 
     this._itemService.getAllItems().subscribe({
       next: (data: any) => {
-        console.log(data);
         this.islands = data;
         this.stopLoading();
       },

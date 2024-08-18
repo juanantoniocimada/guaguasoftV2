@@ -11,6 +11,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { HourService } from '../../../services/hour.service';
 import { CheckboxModule } from 'primeng/checkbox';
+import { HoursRoutesService } from '../../../services/hours-routes.service';
 
 @Component({
   selector: 'app-form-hour',
@@ -30,7 +31,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     MessageService,
     ConfirmationService,
     LoaderService,
-    HourService
+    HourService,
+    HoursRoutesService
   ],
   templateUrl: './form-hour.component.html',
   styleUrl: './form-hour.component.scss'
@@ -41,9 +43,9 @@ export class FormHourComponent implements OnInit {
   private _messageService= inject(MessageService);
   private _router= inject(Router) ;
   private _activatedRoute= inject(ActivatedRoute) ;
-
   private _routeService  =inject(RouteService);
   private _hourService  =inject(HourService);
+  private _hoursRoutesService  =inject(HoursRoutesService);
 
   public festive : boolean = false;
   public monday : boolean = false;
@@ -81,7 +83,6 @@ export class FormHourComponent implements OnInit {
 
     this.getRoutes();
     this.getHours();
-
   }
 
   parseBoolean(value: string): boolean {
@@ -118,9 +119,8 @@ export class FormHourComponent implements OnInit {
   getHourByHoursRoutesId(id: string, params: any): void {
     this.startLoading();
 
-    this._routeService.getHourByHoursRoutesId(id).subscribe({
+    this._hoursRoutesService.getHourByHoursRoutesId(id).subscribe({
       next: (data: any) => {
-
 
         this.festive = this.parseBoolean(data.festive);
         this.monday = this.parseBoolean(data.monday);
@@ -130,8 +130,6 @@ export class FormHourComponent implements OnInit {
         this.friday = this.parseBoolean(data.friday);
         this.saturday = this.parseBoolean(data.saturday);
         this.sunday = this.parseBoolean(data.sunday);
-
-        console.log(data);
 
         this.route = {
           id: data.routes_id,
@@ -196,7 +194,7 @@ export class FormHourComponent implements OnInit {
       sunday: this.sunday
     };
 
-    this._routeService.putHour(this.id, item).subscribe({
+    this._hoursRoutesService.putHour(this.route.id, this.hour.id, item).subscribe({
       next: (data: any) => {
 
         this.stopLoading();
@@ -248,7 +246,7 @@ export class FormHourComponent implements OnInit {
       sunday: this.sunday
     };
 
-    this._routeService.postHour(this.route.id, this.hour.id, item).subscribe({
+    this._hoursRoutesService.postHour(this.route.id, this.hour.id, item).subscribe({
       next: (data: any) => {
 
         this.stopLoading();

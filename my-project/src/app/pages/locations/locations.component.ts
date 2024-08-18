@@ -13,6 +13,8 @@ import { StepsModule } from 'primeng/steps';
 import { HttpClientModule } from '@angular/common/http';
 import { LoaderService } from '../../services/loader.service';
 import { Router } from '@angular/router';
+import { LocationsRoutesService } from '../../services/locations-routes.service';
+import { LocationService } from '../../services/location.service';
 
 @Component({
   selector: 'app-locations',
@@ -32,7 +34,8 @@ import { Router } from '@angular/router';
     HourService,
     RouteService,
     MessageService,
-    ConfirmationService
+    ConfirmationService,
+    LocationsRoutesService
   ],
   templateUrl: './locations.component.html',
   styleUrl: './locations.component.scss'
@@ -43,6 +46,7 @@ export class LocationsComponent {
   route: any;
 
   private _routeService= inject(RouteService);
+  private _locationsRoutesService= inject(LocationsRoutesService);
   private _messageService= inject(MessageService);
   private _loaderService= inject(LoaderService);
   private _confirmationService= inject(ConfirmationService);
@@ -62,9 +66,6 @@ export class LocationsComponent {
   }
 
   edit(location: any) {
-
-    console.log(location);
-
     this._router.navigate(['/form-location'], { queryParams: { edit: true, id: location['locations-routes-id'] } });
   }
 
@@ -86,7 +87,7 @@ export class LocationsComponent {
 
     this.startLoading();
 
-    this._routeService.deleteLocation(id).subscribe({
+    this._locationsRoutesService.deleteLocation(id).subscribe({
       next: (data: any) => {
 
         this.stopLoading();
@@ -106,7 +107,7 @@ export class LocationsComponent {
   getLocations(idRoute: any) {
     this.startLoading();
 
-    this._routeService.getLocationsByRoute(idRoute).subscribe({
+    this._locationsRoutesService.getLocationsByRoute(idRoute).subscribe({
       next: (data: any) => {
         this.locations = data;
         this.stopLoading();
