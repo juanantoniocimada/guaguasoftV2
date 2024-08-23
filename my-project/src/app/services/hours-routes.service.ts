@@ -24,7 +24,7 @@ export class HoursRoutesService {
   }
 
   getHoursByRoute(routeId: string): Observable<any> {
-    return this._http.get<any>(`${this._apiUrl}/${routeId}/hours`);
+    return this._http.get<any>(`${this._apiUrl}/${routeId}`);
   }
 
   getHourByHoursRoutesId(id: string): Observable<any> {

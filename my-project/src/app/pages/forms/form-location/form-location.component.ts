@@ -1,3 +1,4 @@
+import { log } from 'node:console';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
@@ -13,7 +14,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from '../../../services/location.service';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { LocationsRoutesService } from '../../../services/locations-routes.service';
-import { HoursRoutesService } from '../../../services/hours-routes.service';
 
 @Component({
   selector: 'app-form-location',
@@ -76,6 +76,9 @@ export class FormLocationComponent implements OnInit {
       this.id = params['id'];
 
       if (this.edit) {
+
+        console.log(params);
+
         this.getLocationByLocationsRoutesId(params['id'], params);
       }
     });
@@ -129,6 +132,7 @@ export class FormLocationComponent implements OnInit {
 
     this._locationsRoutesService.getLocationByLocationsRoutesId(id).subscribe({
       next: (data: any) => {
+
 
         this.festive = this.parseBoolean(data.festive);
         this.monday = this.parseBoolean(data.monday);

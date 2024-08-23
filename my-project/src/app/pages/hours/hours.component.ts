@@ -68,7 +68,8 @@ export class HoursComponent implements OnInit {
   }
 
   onOptionChange(event: any): void {
-    this.getHours(event.value.id)
+
+    this.getHours(event.value.id_routes)
   }
 
   deleteHour(routeId: string, hourId: string) {

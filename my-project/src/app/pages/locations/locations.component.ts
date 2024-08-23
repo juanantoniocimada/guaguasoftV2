@@ -14,7 +14,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoaderService } from '../../services/loader.service';
 import { Router } from '@angular/router';
 import { LocationsRoutesService } from '../../services/locations-routes.service';
-import { LocationService } from '../../services/location.service';
 
 @Component({
   selector: 'app-locations',
@@ -66,7 +65,10 @@ export class LocationsComponent {
   }
 
   edit(location: any) {
-    this._router.navigate(['/form-location'], { queryParams: { edit: true, id: location['locations-routes-id'] } });
+
+    console.log(location);
+
+    this._router.navigate(['/form-location'], { queryParams: { edit: true, id: location['id_locations_routes'] } });
   }
 
   confirm(location: any) {
@@ -74,8 +76,8 @@ export class LocationsComponent {
     this._confirmationService.confirm({
         header: `Borrar`,
         accept: () => {
-          this.deleteLocation(location['locations-routes-id']);
-          this.getLocations(location.routes_id)
+          this.deleteLocation(location['id_locations_routes']);
+          this.getLocations(location)
         },
         reject: () => {
             this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'no se ha podido borrar', life: 3000 });
@@ -84,6 +86,8 @@ export class LocationsComponent {
   }
 
   deleteLocation(id: any) {
+
+    console.log(id);
 
     this.startLoading();
 
@@ -104,24 +108,27 @@ export class LocationsComponent {
     });
   }
 
-  getLocations(idRoute: any) {
+  getLocations(data: any) {
     this.startLoading();
 
-    this._locationsRoutesService.getLocationsByRoute(idRoute).subscribe({
+    console.log('data');
+    console.log(data);
+
+    this._locationsRoutesService.getLocationsByRoute(data.value.id_locations_routes).subscribe({
       next: (data: any) => {
         this.locations = data;
         this.stopLoading();
       },
       error: (error: any) => {
         this.stopLoading();
-        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
+        this._messageService.add({ severity: 'error', summary: 'Error', detail: 'Error en la llamada', life: 3000 });
       },
       complete: () => { }
     });
   }
 
   onOptionChange(event: any): void {
-    this.getLocations(event.value.id)
+    this.getLocations(event)
   }
 
   startLoading() {

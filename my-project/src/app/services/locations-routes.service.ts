@@ -13,7 +13,7 @@ export class LocationsRoutesService {
 
     // routev3/16
   getLocationByLocationsRoutesId(id: string): Observable<any> {
-    return this._http.get<any>(`${this._apiUrl}/${id}`);
+    return this._http.get<any>(`${this._apiUrl}/${id}/detail`);
   }
 
   // route/7/location/23
@@ -32,6 +32,6 @@ export class LocationsRoutesService {
 
   // route/20/locations
   getLocationsByRoute(routeId: string): Observable<any> {
-    return this._http.get<any>(`${this._apiUrl}/${routeId}/locations`);
+    return this._http.get<any>(`${this._apiUrl}/${routeId}`);
   }
 }
