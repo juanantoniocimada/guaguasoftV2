@@ -17,6 +17,7 @@ import { LocationsRoutesService } from '../../../services/locations-routes.servi
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { TitleComponent } from "../../../components/title/title.component";
+import { FooterComponent } from "../../../components/footer/footer.component";
 
 @Component({
   selector: 'app-form-location',
@@ -33,7 +34,8 @@ import { TitleComponent } from "../../../components/title/title.component";
     FloatLabelModule,
     ConfirmDialogModule,
     ToastModule,
-    TitleComponent
+    TitleComponent,
+    FooterComponent
 ],
   providers: [
     RouteService,
@@ -75,6 +77,11 @@ export class FormLocationComponent implements OnInit {
 
   public edit!: boolean;
   public id!: string;
+
+  ctaButtons = [
+    { text: 'create Item', action: () => this.createItem() },
+    { text: 'update Item', action: () => this.updateItem() }
+  ];
 
   ngOnInit(): void {
     this._activatedRoute.queryParams.subscribe((params) => {
@@ -274,7 +281,7 @@ export class FormLocationComponent implements OnInit {
           this.stopLoading();
           this._messageService.add({ severity: 'success', summary: 'success', detail: data.message, life: 3000 });
 
-          // this._router.navigate(['/locations']);
+          this._router.navigate(['/locations']);
         },
         error: (error: any) => {
           this.stopLoading();

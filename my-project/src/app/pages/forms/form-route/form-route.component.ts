@@ -54,6 +54,11 @@ export class FormRouteComponent implements OnInit {
   public number!: number;
   public description = '';
 
+  ctaButtons = [
+    { text: 'create Item', action: () => this.createItem() },
+    { text: 'update Item', action: () => this.updateItem() }
+  ];
+
   ngOnInit(): void {
 
     this._activatedRoute.queryParams.subscribe(params => {
