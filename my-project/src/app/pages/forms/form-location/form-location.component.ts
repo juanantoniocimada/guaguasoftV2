@@ -14,6 +14,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from '../../../services/location.service';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { LocationsRoutesService } from '../../../services/locations-routes.service';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { TitleComponent } from "../../../components/title/title.component";
 
 @Component({
   selector: 'app-form-location',
@@ -28,7 +31,10 @@ import { LocationsRoutesService } from '../../../services/locations-routes.servi
     DropdownModule,
     CheckboxModule,
     FloatLabelModule,
-  ],
+    ConfirmDialogModule,
+    ToastModule,
+    TitleComponent
+],
   providers: [
     RouteService,
     MessageService,
@@ -76,9 +82,6 @@ export class FormLocationComponent implements OnInit {
       this.id = params['id'];
 
       if (this.edit) {
-
-        console.log(params);
-
         this.getLocationByLocationsRoutesId(params['id'], params);
       }
     });
@@ -99,8 +102,7 @@ export class FormLocationComponent implements OnInit {
         this.stopLoading();
         this._messageService.add({
           severity: 'error',
-          summary: 'Rejected',
-          detail: 'Error en la llamada',
+          summary: JSON.stringify(error),
           life: 3000,
         });
       },
@@ -167,8 +169,7 @@ export class FormLocationComponent implements OnInit {
         this.stopLoading();
         this._messageService.add({
           severity: 'error',
-          summary: 'Rejected',
-          detail: 'Error en la llamada',
+          summary: JSON.stringify(error),
           life: 3000,
         });
       },
@@ -176,11 +177,11 @@ export class FormLocationComponent implements OnInit {
     });
   }
 
-  startLoading() {
+  public startLoading() {
     this._loaderService.showIndeterminate();
   }
 
-  stopLoading() {
+  public stopLoading() {
     this._loaderService.hideLoader();
   }
 
@@ -197,8 +198,7 @@ export class FormLocationComponent implements OnInit {
         this.stopLoading();
         this._messageService.add({
           severity: 'error',
-          summary: 'Rejected',
-          detail: 'Error en la llamada',
+          summary: JSON.stringify(error),
           life: 3000,
         });
       },
@@ -224,6 +224,14 @@ export class FormLocationComponent implements OnInit {
       .putLocation(this.id, item)
       .subscribe({
         next: (data: any) => {
+
+          this._messageService.add({
+            severity: 'success',
+            summary: 'success',
+            detail: 'modificado correctamente',
+            life: 3000,
+          });
+
           this.stopLoading();
           this._router.navigate(['/locations']);
         },
@@ -231,8 +239,7 @@ export class FormLocationComponent implements OnInit {
           this.stopLoading();
           this._messageService.add({
             severity: 'error',
-            summary: 'Rejected',
-            detail: 'Error en la llamada',
+            summary: JSON.stringify(error),
             life: 3000,
           });
         },
@@ -258,18 +265,22 @@ export class FormLocationComponent implements OnInit {
     };
 
     this._locationsRoutesService
-      .postLocation(this.route.id, this.location.id, item)
+      .postLocation(this.route.id_routes, this.location.id_locations, item)
       .subscribe({
         next: (data: any) => {
+
+          console.log(data);
+
           this.stopLoading();
-          this._router.navigate(['/locations']);
+          this._messageService.add({ severity: 'success', summary: 'success', detail: data.message, life: 3000 });
+
+          // this._router.navigate(['/locations']);
         },
         error: (error: any) => {
           this.stopLoading();
           this._messageService.add({
             severity: 'error',
-            summary: 'QWE',
-            detail: 'Error en la llamada',
+            summary: JSON.stringify(error),
             life: 3000,
           });
         },

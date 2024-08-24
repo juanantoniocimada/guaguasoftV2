@@ -1,7 +1,7 @@
 <div class="navbar">
 
   <p-button
-    icon="{{ (sidebarVisible$ | async) ? 'pi pi-chevron-left' : 'pi pi-chevron-right' }}"
+    icon="pi pi-bars"
     (click)="toggleSidebar()"
   >
   </p-button>
@@ -13,12 +13,8 @@
     (click)="navigate('/locations')"></p-button>
 
   <p-button icon="pi pi-power-off" class="navbar__button--logout" severity="warning" />
-
 </div>
 
 <div class="progress-container">
-  <p-progressBar [mode]="mode" [style]="{ height: '4px' }"></p-progressBar>
+  <p-progressBar [color]="'#f39c12'" [style]="{ height: '5px' }" [mode]="mode"></p-progressBar>
 </div>
-
-
-

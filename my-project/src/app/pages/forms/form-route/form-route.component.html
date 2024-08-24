@@ -1,3 +1,8 @@
+<app-title title="formulario ruta">
+
+</app-title>
+
+
 <div class="container">
 
   <p-floatLabel>
@@ -18,18 +23,32 @@
 
 </div>
 
-<div class="footer-fixed">
-  <p-button
-    *ngIf="!edit"
-    label="Crear"
-    [raised]="true"
-    (click)="createItem()"
-  />
+<!--
+  <div class="footer-fixed">
+    <p-button
+      *ngIf="!edit"
+      label="Crear"
+      [raised]="true"
+      (click)="createItem()"
+    />
 
-  <p-button
-    *ngIf="edit"
-    label="Editar"
-    [raised]="true"
-    (click)="updateItem()"
-  />
-</div>
+    <p-button
+      *ngIf="edit"
+      label="Editar"
+      [raised]="true"
+      (click)="updateItem()"
+    />
+  </div>
+-->
+
+<app-footer></app-footer>
+
+<p-toast />
+
+<p-confirmDialog>
+  <ng-template pTemplate="message" let-message>
+    <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+      <p>{{ message.message }}</p>
+    </div>
+  </ng-template>
+</p-confirmDialog>

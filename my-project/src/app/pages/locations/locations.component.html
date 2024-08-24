@@ -1,24 +1,24 @@
 
+<app-title title="gestión localizaciones">
+
+</app-title>
 
 <div class="card">
-
-  <h1>
-    Gestión de paradas | lineas
-  </h1>
 
   <p-button
     class="navbar__button navbar__button--logout"
     label="Añadir parada a linea"
-    icon="pi pi-check" [outlined]="true"
+    icon="pi pi-plus" [outlined]="true"
     severity="warning"
     (click)="add()">
   </p-button>
 
   <p-dropdown
+    [filter]="true"
     [options]="routes"
     [(ngModel)]="route"
     optionLabel="description"
-    placeholder="seleccioa una ruta"
+    placeholder="selecciona una ruta"
     (onChange)="onOptionChange($event)"
   />
 
@@ -29,6 +29,7 @@
   <p-table [value]="locations" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
       <tr>
+        <th>(id)</th>
 
         <th>description</th>
 
@@ -49,6 +50,8 @@
     </ng-template>
     <ng-template pTemplate="body" let-location>
       <tr>
+        <td>{{ location.id_locations_routes }}</td>
+
         <td>{{ location.description }}</td>
 
         <td>{{ location.preferred_stop }}</td>

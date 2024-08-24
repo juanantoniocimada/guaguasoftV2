@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoaderService } from '../../services/loader.service';
 import { Router } from '@angular/router';
 import { LocationsRoutesService } from '../../services/locations-routes.service';
+import { TitleComponent } from "../../components/title/title.component";
 
 @Component({
   selector: 'app-locations',
@@ -27,8 +28,9 @@ import { LocationsRoutesService } from '../../services/locations-routes.service'
     DropdownModule,
     CommonModule,
     StepsModule,
-    HttpClientModule
-  ],
+    HttpClientModule,
+    TitleComponent
+],
   providers:[
     HourService,
     RouteService,
@@ -65,9 +67,6 @@ export class LocationsComponent {
   }
 
   edit(location: any) {
-
-    console.log(location);
-
     this._router.navigate(['/form-location'], { queryParams: { edit: true, id: location['id_locations_routes'] } });
   }
 
@@ -77,7 +76,6 @@ export class LocationsComponent {
         header: `Borrar`,
         accept: () => {
           this.deleteLocation(location['id_locations_routes']);
-          this.getLocations(location)
         },
         reject: () => {
             this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'no se ha podido borrar', life: 3000 });
@@ -87,22 +85,24 @@ export class LocationsComponent {
 
   deleteLocation(id: any) {
 
-    console.log(id);
-
     this.startLoading();
 
     this._locationsRoutesService.deleteLocation(id).subscribe({
       next: (data: any) => {
 
         this.stopLoading();
-        // this.getLocations(routeId);
+        // this.getLocations(location)
 
-        this._messageService.add({ severity: 'success', summary: 'Rejected', detail: 'Borrado correctamente', life: 3000 });
+        this._messageService.add({ severity: 'success', summary: 'success', detail: 'Borrado correctamente', life: 3000 });
 
       },
       error: (error: any) => {
         this.stopLoading();
-        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
+        this._messageService.add({
+          severity: 'error',
+          summary: JSON.stringify(error),
+          life: 3000,
+        });
       },
       complete: () => { }
     });
@@ -111,17 +111,18 @@ export class LocationsComponent {
   getLocations(data: any) {
     this.startLoading();
 
-    console.log('data');
-    console.log(data);
-
-    this._locationsRoutesService.getLocationsByRoute(data.value.id_locations_routes).subscribe({
+    this._locationsRoutesService.getLocationsByRoute(data.value.id_routes).subscribe({
       next: (data: any) => {
         this.locations = data;
         this.stopLoading();
       },
       error: (error: any) => {
         this.stopLoading();
-        this._messageService.add({ severity: 'error', summary: 'Error', detail: 'Error en la llamada', life: 3000 });
+        this._messageService.add({
+          severity: 'error',
+          summary: JSON.stringify(error),
+          life: 3000,
+        });
       },
       complete: () => { }
     });
@@ -131,11 +132,11 @@ export class LocationsComponent {
     this.getLocations(event)
   }
 
-  startLoading() {
+  public startLoading() {
     this._loaderService.showIndeterminate();
   }
 
-  stopLoading() {
+  public stopLoading() {
     this._loaderService.hideLoader();
   }
 
@@ -151,8 +152,11 @@ export class LocationsComponent {
 
         this.stopLoading();
 
-        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
-
+        this._messageService.add({
+          severity: 'error',
+          summary: JSON.stringify(error),
+          life: 3000,
+        });
       },
       complete: () => { }
     });

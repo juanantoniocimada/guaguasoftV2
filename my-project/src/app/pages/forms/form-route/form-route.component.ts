@@ -9,6 +9,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { InputTextModule } from 'primeng/inputtext';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { FooterComponent } from "../../../components/footer/footer.component";
+import { TitleComponent } from "../../../components/title/title.component";
 
 
 @Component({
@@ -21,8 +25,12 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     HttpClientModule,
     InputTextModule,
-    CommonModule
-  ],
+    CommonModule,
+    ToastModule,
+    ConfirmDialogModule,
+    FooterComponent,
+    TitleComponent
+],
   providers:[
     RouteService,
     MessageService,
@@ -93,13 +101,22 @@ export class FormRouteComponent implements OnInit {
     this._itemService.createItem(item).subscribe({
       next: (data: any) => {
 
+        console.log(data);
+
+
         this.stopLoading();
+        this._messageService.add({ severity: 'success', summary: 'success', detail: 'Operación realizada', life: 3000 });
+
         this._router.navigate(['/lines']);
 
       },
       error: (error: any) => {
         this.stopLoading();
-        this._messageService.add({ severity: 'error', summary: 'QWE', detail: 'Error en la llamada', life: 3000 });
+        this._messageService.add({
+          severity: 'error',
+          summary: JSON.stringify(error),
+          life: 3000,
+        });
       },
       complete: () => { }
     });
@@ -124,7 +141,11 @@ export class FormRouteComponent implements OnInit {
       },
       error: (error: any) => {
         this.stopLoading();
-        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
+        this._messageService.add({
+          severity: 'error',
+          summary: JSON.stringify(error),
+          life: 3000,
+        });
       },
       complete: () => { }
     });

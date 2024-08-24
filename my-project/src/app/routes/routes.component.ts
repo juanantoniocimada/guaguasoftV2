@@ -9,6 +9,7 @@ import { RouteService } from '../services/route.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpClientModule } from '@angular/common/http';
 import { LoaderService } from '../services/loader.service';
+import { TitleComponent } from "../components/title/title.component";
 
 @Component({
   selector: 'app-routes',
@@ -19,8 +20,9 @@ import { LoaderService } from '../services/loader.service';
     ToastModule,
     ConfirmDialogModule,
     DropdownModule,
-    HttpClientModule
-  ],
+    HttpClientModule,
+    TitleComponent
+],
   providers:[
     RouteService,
     MessageService,
@@ -67,7 +69,11 @@ export class RoutesComponent implements OnInit {
       },
       error: (error: any) => {
         this.stopLoading();
-        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
+        this._messageService.add({
+          severity: 'error',
+          summary: JSON.stringify(error),
+          life: 3000,
+        });
       },
       complete: () => { }
     });
@@ -104,7 +110,12 @@ export class RoutesComponent implements OnInit {
       },
       error: (error: any) => {
         this.stopLoading();
-        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
+
+        this._messageService.add({
+          severity: 'error',
+          summary: JSON.stringify(error),
+          life: 3000,
+        });
       },
       complete: () => { }
     });

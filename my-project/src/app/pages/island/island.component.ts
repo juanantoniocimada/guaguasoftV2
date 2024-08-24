@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { IslandService } from '../../services/island.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoaderService } from '../../services/loader.service';
+import { TitleComponent } from "../../components/title/title.component";
 
 @Component({
   selector: 'app-island',
@@ -19,7 +20,8 @@ import { LoaderService } from '../../services/loader.service';
     FloatLabelModule,
     ButtonModule,
     HttpClientModule,
-  ],
+    TitleComponent
+],
   providers:[
     IslandService,
   ],

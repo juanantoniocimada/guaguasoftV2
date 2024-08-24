@@ -1,14 +1,12 @@
-<h1 *ngIf="!edit">
-  Añadir hora a línea
-</h1>
 
-<h1 *ngIf="edit">
-  Editar hora de la línea
-</h1>
+<app-title title="formulario hora">
+
+</app-title>
 
 <div class="container">
 
   <p-dropdown
+    [filter]="true"
     [disabled]="edit"
     [options]="routes"
     [(ngModel)]="route"
@@ -17,6 +15,7 @@
   />
 
   <p-dropdown
+    [filter]="true"
     [disabled]="edit"
     [options]="hours"
     [(ngModel)]="hour"
@@ -24,7 +23,7 @@
     placeholder="selecciona una hora"
   />
 
-  <p-button *ngIf="!edit" label="crear hora nueva" (onClick)="showCustomHour = true" />
+  <p-button *ngIf="!edit" label="crear hora nueva" (onClick)="toggleCustomHour()" />
 
   <div *ngIf="showCustomHour" class="custom-hour">
     <input
@@ -33,10 +32,13 @@
       pInputText
       [(ngModel)]="customHour"
     />
-    <p-button icon="pi pi-check" size="small" (onClick)="addCustomHour()" />
+    <p-button icon="pi pi-check" (onClick)="addCustomHour()" />
 
   </div>
 
+</div>
+
+<div class="container">
 
   <p-checkbox
     [(ngModel)]="festive"
@@ -96,18 +98,35 @@
 
 </div>
 
-<div class="footer-fixed">
-  <p-button
-    *ngIf="!edit"
-    label="Crear"
-    [raised]="true"
-    (click)="createItem()"
-  />
+<!--
+  <div class="footer-fixed">
+    <p-button
+      *ngIf="!edit"
+      label="Crear"
+      [raised]="true"
+      (click)="createItem()"
+    />
 
-  <p-button
-    *ngIf="edit"
-    label="Editar"
-    [raised]="true"
-    (click)="updateItem()"
-  />
-</div>
+    <p-button
+      *ngIf="edit"
+      label="Editar"
+      [raised]="true"
+      (click)="updateItem()"
+    />
+  </div>
+-->
+
+<app-footer
+  [ctaButtons]="ctaButtons"
+  ></app-footer>
+
+
+<p-toast />
+
+<p-confirmDialog>
+  <ng-template pTemplate="message" let-message>
+    <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+      <p>{{ message.message }}</p>
+    </div>
+  </ng-template>
+</p-confirmDialog>

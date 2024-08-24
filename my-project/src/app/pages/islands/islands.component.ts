@@ -8,6 +8,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { HttpClientModule } from '@angular/common/http';
 import { LoaderService } from '../../services/loader.service';
+import { TitleComponent } from "../../components/title/title.component";
 
 @Component({
   selector: 'app-islands',
@@ -18,8 +19,8 @@ import { LoaderService } from '../../services/loader.service';
     ToastModule,
     ConfirmDialogModule,
     HttpClientModule,
-
-  ],
+    TitleComponent
+],
   providers:[
     IslandService,
     MessageService,

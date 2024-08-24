@@ -1,9 +1,13 @@
 
+<app-title title="gestión rutas">
+
+</app-title>
+
 <div class="card">
 
   <p-button
     label="Añadir ruta"
-    icon="pi pi-check" [outlined]="true"
+    icon="pi pi-plus" [outlined]="true"
     severity="warning"
     (click)="add()"
   >
@@ -13,6 +17,7 @@
   <p-table [value]="routes" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
       <tr>
+        <th>(id)</th>
         <th>number</th>
         <th>description</th>
         <th></th>
@@ -20,6 +25,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-route>
       <tr>
+        <td>{{ route.id_routes }}</td>
         <td>{{ route.number }}</td>
         <td>{{ route.description }}</td>
         <td>

@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoaderService } from '../../services/loader.service';
 import { Router } from '@angular/router';
 import { HoursRoutesService } from '../../services/hours-routes.service';
+import { TitleComponent } from "../../components/title/title.component";
 
 @Component({
   selector: 'app-hours',
@@ -24,8 +25,9 @@ import { HoursRoutesService } from '../../services/hours-routes.service';
     FormsModule,
     DropdownModule,
     CommonModule,
-    HttpClientModule
-  ],
+    HttpClientModule,
+    TitleComponent
+],
   providers:[
     RouteService,
     MessageService,
@@ -62,7 +64,10 @@ export class HoursComponent implements OnInit {
           this.getHours(hour.routes_id)
         },
         reject: () => {
-            this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'no se ha podido borrar', life: 3000 });
+            this._messageService.add({
+              severity: 'error',
+              summary: 'Rejected',
+              detail: 'no se ha podido borrar', life: 3000 });
         }
     });
   }
@@ -81,12 +86,16 @@ export class HoursComponent implements OnInit {
 
         this.stopLoading();
 
-        this._messageService.add({ severity: 'success', summary: 'Rejected', detail: 'Borrado correctamente', life: 3000 });
+        this._messageService.add({ severity: 'success', summary: 'success', detail: 'Operación realizada', life: 3000 });
 
       },
       error: (error: any) => {
         this.stopLoading();
-        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
+        this._messageService.add({
+          severity: 'error',
+          summary: JSON.stringify(error),
+          life: 3000,
+        });
       },
       complete: () => { }
     });
@@ -120,8 +129,11 @@ export class HoursComponent implements OnInit {
       error: (error: any) => {
 
         this.stopLoading();
-        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
-
+        this._messageService.add({
+          severity: 'error',
+          summary: JSON.stringify(error),
+          life: 3000,
+        });
       },
       complete: () => { }
     });
@@ -137,7 +149,11 @@ export class HoursComponent implements OnInit {
       },
       error: (error: any) => {
         this.stopLoading();
-        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
+        this._messageService.add({
+          severity: 'error',
+          summary: JSON.stringify(error),
+          life: 3000,
+        });
       },
       complete: () => { }
     });

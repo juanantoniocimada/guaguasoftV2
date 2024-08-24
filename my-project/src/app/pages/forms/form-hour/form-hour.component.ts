@@ -12,6 +12,10 @@ import { DropdownModule } from 'primeng/dropdown';
 import { HourService } from '../../../services/hour.service';
 import { CheckboxModule } from 'primeng/checkbox';
 import { HoursRoutesService } from '../../../services/hours-routes.service';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { FooterComponent } from "../../../components/footer/footer.component";
+import { TitleComponent } from "../../../components/title/title.component";
 
 @Component({
   selector: 'app-form-hour',
@@ -25,7 +29,11 @@ import { HoursRoutesService } from '../../../services/hours-routes.service';
     CommonModule,
     DropdownModule,
     CheckboxModule,
-  ],
+    ToastModule,
+    ConfirmDialogModule,
+    FooterComponent,
+    TitleComponent
+],
   providers:[
     RouteService,
     MessageService,
@@ -55,6 +63,11 @@ export class FormHourComponent implements OnInit {
   public friday : boolean = false;
   public saturday : boolean = false;
   public sunday : boolean = false;
+
+  ctaButtons = [
+    { text: 'create Item', action: () => this.createItem() },
+    { text: 'update Item', action: () => this.updateItem() }
+  ];
 
   routes: any[] = [];
   route: any;
@@ -110,7 +123,11 @@ export class FormHourComponent implements OnInit {
       },
       error: (error: any) => {
         this.stopLoading();
-        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
+        this._messageService.add({
+          severity: 'error',
+          summary: JSON.stringify(error),
+          life: 3000,
+        });
       },
       complete: () => { }
     });
@@ -146,18 +163,22 @@ export class FormHourComponent implements OnInit {
       },
       error: (error: any) => {
         this.stopLoading();
-        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
+        this._messageService.add({
+          severity: 'error',
+          summary: JSON.stringify(error),
+          life: 3000,
+        });
       },
       complete: () => { }
     });
   }
 
 
-  startLoading() {
+  public startLoading() {
     this._loaderService.showIndeterminate();
   }
 
-  stopLoading() {
+  public stopLoading() {
     this._loaderService.hideLoader();
   }
 
@@ -173,7 +194,11 @@ export class FormHourComponent implements OnInit {
       error: (error: any) => {
 
         this.stopLoading();
-        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
+        this._messageService.add({
+          severity: 'error',
+          summary: JSON.stringify(error),
+          life: 3000,
+        });
 
       },
       complete: () => { }
@@ -203,10 +228,18 @@ export class FormHourComponent implements OnInit {
       },
       error: (error: any) => {
         this.stopLoading();
-        this._messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Error en la llamada', life: 3000 });
+        this._messageService.add({
+          severity: 'error',
+          summary: JSON.stringify(error),
+          life: 3000,
+        });
       },
       complete: () => { }
     });
+  }
+
+  toggleCustomHour() {
+    this.showCustomHour = !this.showCustomHour;
   }
 
   addCustomHour(): void {
@@ -222,17 +255,24 @@ export class FormHourComponent implements OnInit {
         this.getHours();
         this.showCustomHour = false;
         this.stopLoading();
+        this._messageService.add({ severity: 'success', summary: 'success', detail: data.value, life: 3000 });
 
       },
       error: (error: any) => {
-        this._messageService.add({ severity: 'error', summary: 'QWE', detail: 'Error en la llamada', life: 3000 });
         this.stopLoading();
+
+        this._messageService.add({
+          severity: 'error',
+          summary: JSON.stringify(error),
+          life: 3000,
+        });
       },
       complete: () => { }
     });
   }
 
   createItem(): void {
+
     this.startLoading();
 
     const item = {
@@ -246,7 +286,7 @@ export class FormHourComponent implements OnInit {
       sunday: this.sunday
     };
 
-    this._hoursRoutesService.postHour(this.route.id, this.hour.id, item).subscribe({
+    this._hoursRoutesService.postHour(this.route.id_routes, this.hour.id_hours, item).subscribe({
       next: (data: any) => {
 
         this.stopLoading();
@@ -255,7 +295,12 @@ export class FormHourComponent implements OnInit {
       },
       error: (error: any) => {
         this.stopLoading();
-        this._messageService.add({ severity: 'error', summary: 'QWE', detail: 'Error en la llamada', life: 3000 });
+
+        this._messageService.add({
+          severity: 'error',
+          summary: JSON.stringify(error),
+          life: 3000,
+        });
       },
       complete: () => { }
     });

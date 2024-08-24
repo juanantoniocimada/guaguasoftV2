@@ -1,0 +1,11 @@
+<div class="footer-fixed">
+  <div *ngFor="let button of ctaButtons">
+      <p-button
+        [label]="button.text"
+        [raised]="true"
+        (click)="handleClick(button.action)"
+    />
+  </div>
+
+</div>
+

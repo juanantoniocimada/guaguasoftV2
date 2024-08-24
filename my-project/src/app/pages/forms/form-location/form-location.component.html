@@ -1,14 +1,12 @@
-<h1 *ngIf="!edit">
-  Añadir localización a línea
-</h1>
+<app-title title="editar/ crear localizaciones">
 
-<h1 *ngIf="edit">
-  Editar localización de la línea
-</h1>
+</app-title>
+
 
 <div class="container">
 
   <p-dropdown
+    [filter]="true"
     [disabled]="edit"
     [options]="routes"
     [(ngModel)]="route"
@@ -17,6 +15,7 @@
   />
 
   <p-dropdown
+    [filter]="true"
     [disabled]="edit"
     [options]="locations"
     [(ngModel)]="location"
@@ -105,18 +104,30 @@
 
 </div>
 
-<div class="footer-fixed">
-  <p-button
-    *ngIf="!edit"
-    label="Crear"
-    [raised]="true"
-    (click)="createItem()"
-  />
+<!--
+  <div class="footer-fixed">
+    <p-button
+      *ngIf="!edit"
+      label="Crear"
+      [raised]="true"
+      (click)="createItem()"
+    />
 
-  <p-button
-    *ngIf="edit"
-    label="Editar"
-    [raised]="true"
-    (click)="updateItem()"
-  />
-</div>
+    <p-button
+      *ngIf="edit"
+      label="Editar"
+      [raised]="true"
+      (click)="updateItem()"
+    />
+  </div>
+-->
+
+<p-toast />
+
+<p-confirmDialog>
+  <ng-template pTemplate="message" let-message>
+    <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+      <p>{{ message.message }}</p>
+    </div>
+  </ng-template>
+</p-confirmDialog>
