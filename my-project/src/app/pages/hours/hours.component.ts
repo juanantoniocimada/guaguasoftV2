@@ -114,7 +114,7 @@ export class HoursComponent implements OnInit {
   }
 
   edit(hour: any) {
-    this._router.navigate(['/form-hour'], { queryParams: { edit: true, id: hour.id } });
+    this._router.navigate(['/form-hour'], { queryParams: { edit: true, id: hour.id_hours_routes } });
   }
 
   getHours(idRoute: any) {

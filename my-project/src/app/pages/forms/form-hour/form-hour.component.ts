@@ -90,7 +90,7 @@ export class FormHourComponent implements OnInit {
       this.id = params['id'];
 
       if(this.edit) {
-        this.getHourByHoursRoutesId(params['id'], params)
+        this.getHourByHoursRoutesId(params['id'])
       }
     });
 
@@ -133,8 +133,11 @@ export class FormHourComponent implements OnInit {
     });
   }
 
-  getHourByHoursRoutesId(id: string, params: any): void {
+  getHourByHoursRoutesId(id: string): void {
     this.startLoading();
+
+    console.log(id);
+
 
     this._hoursRoutesService.getHourByHoursRoutesId(id).subscribe({
       next: (data: any) => {
@@ -148,14 +151,19 @@ export class FormHourComponent implements OnInit {
         this.saturday = this.parseBoolean(data.saturday);
         this.sunday = this.parseBoolean(data.sunday);
 
+        console.log(data);
+
+
         this.route = {
-          id: data.routes_id,
+          id_routes: data.id_routes,
           number: data.number,
           description: data.description,
-          internal_name: ""
+          internal_name: "",
+          color: "#ABB2B9"
         };
+
         this.hour = {
-          id: data.hours_id,
+          id_hours: data.id_hours,
           value: data.value
         };
 
