@@ -13,6 +13,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { FooterComponent } from "../../../components/footer/footer.component";
 import { TitleComponent } from "../../../components/title/title.component";
+import { ColorPickerModule } from 'primeng/colorpicker';
 
 
 @Component({
@@ -29,7 +30,8 @@ import { TitleComponent } from "../../../components/title/title.component";
     ToastModule,
     ConfirmDialogModule,
     FooterComponent,
-    TitleComponent
+    TitleComponent,
+    ColorPickerModule
 ],
   providers:[
     RouteService,
@@ -53,6 +55,7 @@ export class FormRouteComponent implements OnInit {
 
   public number!: number;
   public description = '';
+  public color = '';
 
   ctaButtons = [
     { text: 'create Item', action: () => this.createItem() },
@@ -80,9 +83,13 @@ export class FormRouteComponent implements OnInit {
 
     this._itemService.getItemById(id).subscribe((data: any) => {
 
-      this.id = data.id;
+      console.log(data);
+
+
+      // this.id = data.id;
       this.number = data.number;
       this.description = data.description;
+      this.color = data.color;
 
     });
   }
@@ -134,11 +141,19 @@ export class FormRouteComponent implements OnInit {
 
     const item = {
       number: this.number,
-      description: this.description
+      description: this.description,
+      color: this.color
     };
 
     this._itemService.updateItem(this.id, item).subscribe({
       next: (data: any) => {
+
+        this._messageService.add({
+          severity: 'success',
+          summary: 'success',
+          detail: 'modificado correctamente',
+          life: 3000,
+        });
 
         this.stopLoading();
         this._router.navigate(['/lines']);

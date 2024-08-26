@@ -6,20 +6,36 @@
 <div class="container">
 
   <p-floatLabel>
-    <input id="username" type="text"
+    <input
+      id="number"
+      type="text"
       class="p-inputtext-lg"
       pInputText
       [(ngModel)]="number" />
-    <label for="username">Número de línea</label>
+    <label for="number">Número de línea</label>
   </p-floatLabel>
 
   <p-floatLabel>
-    <input id="username" type="text"
+    <input
+      id="description"
+      type="text"
       class="p-inputtext-lg"
       pInputText
       [(ngModel)]="description" />
-    <label for="username">Descripción línea</label>
+    <label for="description">Descripción línea</label>
   </p-floatLabel>
+
+  <p-floatLabel>
+    <input
+      id="color"
+      type="text"
+      class="p-inputtext-lg"
+      pInputText
+      [(ngModel)]="color" />
+    <label for="color">Color</label>
+  </p-floatLabel>
+
+  <p-colorPicker [(ngModel)]="color" />
 
 </div>
 

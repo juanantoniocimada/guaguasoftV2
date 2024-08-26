@@ -21,7 +21,8 @@ import { TitleComponent } from "../components/title/title.component";
     ConfirmDialogModule,
     DropdownModule,
     HttpClientModule,
-    TitleComponent
+    TitleComponent,
+
 ],
   providers:[
     RouteService,
