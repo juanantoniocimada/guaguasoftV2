@@ -159,7 +159,7 @@ export class FormHourComponent implements OnInit {
           number: data.number,
           description: data.description,
           internal_name: "",
-          color: "#ABB2B9"
+          color: data.color
         };
 
         this.hour = {
@@ -227,7 +227,8 @@ export class FormHourComponent implements OnInit {
       sunday: this.sunday
     };
 
-    this._hoursRoutesService.putHour(this.route.id, this.hour.id, item).subscribe({
+
+    this._hoursRoutesService.putHour(this.id, item).subscribe({
       next: (data: any) => {
 
         this.stopLoading();

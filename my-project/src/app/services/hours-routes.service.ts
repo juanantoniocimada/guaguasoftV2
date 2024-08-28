@@ -15,8 +15,8 @@ export class HoursRoutesService {
     return this._http.delete<any>(`${this._apiUrl}/${routeId}/hour/${hourId}`);
   }
 
-  putHour(routeId: string, hourId: string, item: any): Observable<any> {
-    return this._http.put<any>(`${this._apiUrl}/${routeId}/hour/${hourId}`, item);
+  putHour(id: string, item: any): Observable<any> {
+    return this._http.put<any>(`${this._apiUrl}/${id}`, item);
   }
 
   postHour(routeId: string, hourId: string, item: any): Observable<any> {
