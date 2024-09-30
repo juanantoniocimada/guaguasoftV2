@@ -1,37 +1,7 @@
 
-<app-title title="gestión localizaciones">
+<app-title title="restriccions por día de la semana">
 
 </app-title>
-
-<div class="card">
-
-  <p-button
-      class="navbar__button navbar__button--logout"
-      label="restriccions por día de la semana"
-      [outlined]="false"
-      severity="warning"
-      (click)="goTo('restrictions-locations-day-of-the-week')"
-    >
-  </p-button>
-
-  <p-button
-    class="navbar__button navbar__button--logout"
-    label="restriccions por hora de la línea"
-    [outlined]="false"
-    severity="warning"
-    (click)="goTo('restrictions-locations-line-hour')"
-  >
-  </p-button>
-
-  <p-button
-    class="navbar__button navbar__button--logout"
-    label="Añadir localiación a linea"
-    icon="pi pi-plus" [outlined]="true"
-    severity="warning"
-    (click)="add()">
-  </p-button>
-
-</div>
 
 <div class="card">
 
@@ -51,19 +21,14 @@
 
         <th>description</th>
 
-        <th>parada preferente</th>
-        <th>tipo parada</th>
-
-        <!--
-          <th>lunes</th>
-          <th>martes</th>
-          <th>miércoles</th>
-          <th>jueves</th>
-          <th>viernes</th>
-          <th>sábado</th>
-          <th>domingo</th>
-          <th>festivos</th>
-        -->
+        <th>lunes</th>
+        <th>martes</th>
+        <th>miércoles</th>
+        <th>jueves</th>
+        <th>viernes</th>
+        <th>sábado</th>
+        <th>domingo</th>
+        <th>festivos</th>
 
         <th></th>
       </tr>
@@ -74,10 +39,6 @@
 
         <td>{{ location.description }}</td>
 
-        <td>{{ location.preferred_stop }}</td>
-        <td>{{ location.type }}</td>
-
-        <!--
         <td>
           <span>
             <div *ngIf="location.monday === '1'; else notOk">
@@ -165,11 +126,12 @@
             </ng-template>
           </span>
         </td>
-        -->
 
         <td>
-          <p-button (click)="confirm(location)" icon="pi pi-trash" severity="warning" />
-          <p-button (click)="edit(location)" icon="pi pi-file-edit" severity="help" />
+          <!--
+            <p-button (click)="confirm(location)" icon="pi pi-trash" severity="warning" />
+            <p-button (click)="edit(location)" icon="pi pi-file-edit" severity="help" />
+          -->
         </td>
       </tr>
     </ng-template>

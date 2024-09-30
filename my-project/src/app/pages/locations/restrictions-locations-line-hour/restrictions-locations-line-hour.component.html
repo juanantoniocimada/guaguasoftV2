@@ -1,0 +1,93 @@
+
+<app-title title="restriccions por hora de la línea">
+
+</app-title>
+
+<div class="card">
+
+  <p-dropdown
+    [filter]="true"
+    [options]="routes"
+    [(ngModel)]="route"
+    optionLabel="description"
+    placeholder="selecciona una ruta"
+    (onChange)="onOptionChange($event)"
+  />
+
+  <p-dropdown
+    [filter]="true"
+    [options]="locations"
+    [(ngModel)]="route"
+    optionLabel="description"
+    placeholder="selecciona una localización"
+    (onChange)="onOptionChange2($event)"
+  />
+
+  <p-table [value]="hours" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>(id)</th>
+        <th>HORA</th>
+        <th>
+          activo
+        </th>
+
+      </tr>
+
+    </ng-template>
+    <ng-template pTemplate="body" let-hour>
+      <tr>
+
+        <td>243</td>
+        <td>05:45</td>
+        <td>
+          yes
+        </td>
+
+      </tr>
+      <tr>
+
+        <td>243</td>
+        <td>05:45</td>
+        <td>
+          yes
+        </td>
+
+      </tr>
+      <tr>
+
+        <td>243</td>
+        <td>05:45</td>
+        <td>
+          yes
+        </td>
+
+      </tr>
+      <tr>
+
+        <td>243</td>
+        <td>05:45</td>
+        <td>
+          yes
+        </td>
+
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+          <td colspan="11">No data.</td>
+      </tr>
+  </ng-template>
+  </p-table>
+
+</div>
+
+<p-toast />
+
+<p-confirmDialog>
+  <ng-template pTemplate="message" let-message>
+    <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+      <p>{{ message.message }}</p>
+    </div>
+  </ng-template>
+</p-confirmDialog>

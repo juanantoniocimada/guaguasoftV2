@@ -7,9 +7,12 @@ import { HoursComponent } from './pages/hours/hours.component';
 import { FormRouteComponent } from './pages/forms/form-route/form-route.component';
 import { FormHourComponent } from './pages/forms/form-hour/form-hour.component';
 import { FormLocationComponent } from './pages/forms/form-location/form-location.component';
+import { RestrictionsLocationsDayOfTheWeekComponent } from './pages/locations/restrictions-locations-day-of-the-week/restrictions-locations-day-of-the-week.component';
+import { RestrictionsLocationsLineHourComponent } from './pages/locations/restrictions-locations-line-hour/restrictions-locations-line-hour.component';
 
 export const routes: Routes = [
   { path: 'lines', component: RoutesComponent },
+
 
   { path: 'form-route', component: FormRouteComponent },
   { path: 'form-route/:id', component: FormRouteComponent },
@@ -21,6 +24,9 @@ export const routes: Routes = [
   { path: 'form-location/:id', component: FormLocationComponent },
 
   { path: 'locations', component: LocationsComponent },
+
+  { path: 'restrictions-locations-day-of-the-week', component: RestrictionsLocationsDayOfTheWeekComponent },
+  { path: 'restrictions-locations-line-hour', component: RestrictionsLocationsLineHourComponent },
 
   { path: 'islands', component: IslandsComponent },
   { path: 'island/:id', component: IslandComponent },

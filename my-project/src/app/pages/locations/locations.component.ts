@@ -70,6 +70,14 @@ export class LocationsComponent {
     this._router.navigate(['/form-location'], { queryParams: { edit: true, id: location['id_locations_routes'] } });
   }
 
+  /*
+    restrictions-locations-day-of-the-week
+    restrictions-locations-line-hour
+  */
+  goTo(route: string) {
+    this._router.navigate([`${route}`]);
+  }
+
   confirm(location: any) {
 
     this._confirmationService.confirm({
