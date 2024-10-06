@@ -14,6 +14,7 @@ import { StepsModule } from 'primeng/steps';
 import { HttpClientModule } from '@angular/common/http';
 import { TitleComponent } from '../../../components/title/title.component';
 import { HourService } from '../../../services/hour.service';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-restrictions-locations-line-hour',
@@ -28,7 +29,8 @@ import { HourService } from '../../../services/hour.service';
     CommonModule,
     StepsModule,
     HttpClientModule,
-    TitleComponent
+    TitleComponent,
+    CheckboxModule
   ],
   providers:[
     HourService,
@@ -54,6 +56,24 @@ export class RestrictionsLocationsLineHourComponent implements OnInit {
 
   hours: any[] = [];
 
+  items = [
+    {
+      'name': '05.40',
+      'value': true
+    },
+    {
+      'name': '09.40',
+      'value': true
+    },
+    {
+      'name': '10.30',
+      'value': false
+    },
+    {
+      'name': '11.30',
+      'value': true
+    },
+  ]
 
   ngOnInit(): void {
     this.getRoutes()

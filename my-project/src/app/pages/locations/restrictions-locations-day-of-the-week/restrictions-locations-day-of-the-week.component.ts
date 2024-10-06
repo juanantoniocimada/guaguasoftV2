@@ -14,6 +14,7 @@ import { RouteService } from '../../../services/route.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { LocationsRoutesService } from '../../../services/locations-routes.service';
 import { LoaderService } from '../../../services/loader.service';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-restrictions-locations-day-of-the-week',
@@ -28,7 +29,8 @@ import { LoaderService } from '../../../services/loader.service';
     CommonModule,
     StepsModule,
     HttpClientModule,
-    TitleComponent
+    TitleComponent,
+    CheckboxModule
 ],
   providers:[
     HourService,
@@ -53,6 +55,43 @@ export class RestrictionsLocationsDayOfTheWeekComponent implements OnInit {
 
   locations: any[] = [];
 
+  items = [
+
+    {
+      'name': 'lunes',
+      'value': true
+    },
+    {
+      'name': 'martes',
+      'value': true
+    },
+    {
+      'name': 'miércoles',
+      'value': true
+    },
+    {
+      'name': 'jueves',
+      'value': true
+    },
+    {
+      'name': 'viernes',
+      'value': true
+    },
+    {
+      'name': 'sábado',
+      'value': true
+    },
+    {
+      'name': 'domingo',
+      'value': true
+    },
+    {
+      'name': 'festivos',
+      'value': true
+    },
+
+  ]
+
   ngOnInit(): void {
     this.getRoutes()
   }
@@ -63,6 +102,10 @@ export class RestrictionsLocationsDayOfTheWeekComponent implements OnInit {
 
   public stopLoading() {
     this._loaderService.hideLoader();
+  }
+
+  onOptionChange2(event: any): void {
+    this.getLocations(event)
   }
 
   onOptionChange(event: any): void {

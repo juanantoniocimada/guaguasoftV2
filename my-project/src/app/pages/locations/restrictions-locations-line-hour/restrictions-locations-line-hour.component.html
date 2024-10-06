@@ -23,55 +23,33 @@
     (onChange)="onOptionChange2($event)"
   />
 
-  <p-table [value]="hours" [tableStyle]="{ 'min-width': '50rem' }">
+  <br>
+  <br>
+  <br>
+
+  <p-table [value]="items" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
       <tr>
-        <th>(id)</th>
-        <th>HORA</th>
-        <th>
-          activo
-        </th>
-
-      </tr>
+        <th>hora</th>
+        <th>activado</th>
+       </tr>
 
     </ng-template>
-    <ng-template pTemplate="body" let-hour>
+    <ng-template pTemplate="body" let-item>
+
       <tr>
-
-        <td>243</td>
-        <td>05:45</td>
         <td>
-          yes
+          {{item.name}}
         </td>
-
-      </tr>
-      <tr>
-
-        <td>243</td>
-        <td>05:45</td>
         <td>
-          yes
+          <p-checkbox
+            [(ngModel)]="item.value"
+            [binary]="true"
+            inputId="binary"
+          />
         </td>
-
       </tr>
-      <tr>
 
-        <td>243</td>
-        <td>05:45</td>
-        <td>
-          yes
-        </td>
-
-      </tr>
-      <tr>
-
-        <td>243</td>
-        <td>05:45</td>
-        <td>
-          yes
-        </td>
-
-      </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
       <tr>
