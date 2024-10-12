@@ -11,6 +11,12 @@ h2 {
 
 }
 
+td {
+  width: 400px;
+  border: 1px solid orange;
+  padding: 1em;
+}
+
 .fields {
   display: flex;
   flex-direction: row;

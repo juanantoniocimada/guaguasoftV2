@@ -9,6 +9,7 @@ import { FormHourComponent } from './pages/forms/form-hour/form-hour.component';
 import { FormLocationComponent } from './pages/forms/form-location/form-location.component';
 import { RestrictionsLocationsDayOfTheWeekComponent } from './pages/locations/restrictions-locations-day-of-the-week/restrictions-locations-day-of-the-week.component';
 import { RestrictionsLocationsLineHourComponent } from './pages/locations/restrictions-locations-line-hour/restrictions-locations-line-hour.component';
+import { FormRestrictionsLocationsLineHourComponent } from './pages/forms/form-restrictions-locations-line-hour/form-restrictions-locations-line-hour.component';
 
 export const routes: Routes = [
   { path: 'lines', component: RoutesComponent },
@@ -22,6 +23,8 @@ export const routes: Routes = [
 
   { path: 'form-location', component: FormLocationComponent },
   { path: 'form-location/:id', component: FormLocationComponent },
+
+  { path: 'form-restrictions-locations-line-hour', component: FormRestrictionsLocationsLineHourComponent },
 
   { path: 'locations', component: LocationsComponent },
 

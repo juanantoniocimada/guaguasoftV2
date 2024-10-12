@@ -15,6 +15,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { LocationsRoutesService } from '../../../services/locations-routes.service';
 import { LoaderService } from '../../../services/loader.service';
 import { CheckboxModule } from 'primeng/checkbox';
+import { FooterComponent } from '../../../components/footer/footer.component';
 
 @Component({
   selector: 'app-restrictions-locations-day-of-the-week',
@@ -30,7 +31,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     StepsModule,
     HttpClientModule,
     TitleComponent,
-    CheckboxModule
+    CheckboxModule,
+    FooterComponent
 ],
   providers:[
     HourService,
@@ -54,43 +56,22 @@ export class RestrictionsLocationsDayOfTheWeekComponent implements OnInit {
   route: any;
 
   locations: any[] = [];
+  location: any
 
-  items = [
+  public id!: string;
 
-    {
-      'name': 'lunes',
-      'value': true
-    },
-    {
-      'name': 'martes',
-      'value': true
-    },
-    {
-      'name': 'miércoles',
-      'value': true
-    },
-    {
-      'name': 'jueves',
-      'value': true
-    },
-    {
-      'name': 'viernes',
-      'value': true
-    },
-    {
-      'name': 'sábado',
-      'value': true
-    },
-    {
-      'name': 'domingo',
-      'value': true
-    },
-    {
-      'name': 'festivos',
-      'value': true
-    },
+  public monday: boolean = false;
+  public tuesday: boolean = false;
+  public wednesday: boolean = false;
+  public thursday: boolean = false;
+  public friday: boolean = false;
+  public saturday: boolean = false;
+  public sunday: boolean = false;
+  public festive: boolean = false;
 
-  ]
+  ctaButtons = [
+    { text: 'update Item', action: () => this.updateItem() }
+  ];
 
   ngOnInit(): void {
     this.getRoutes()
@@ -104,8 +85,11 @@ export class RestrictionsLocationsDayOfTheWeekComponent implements OnInit {
     this._loaderService.hideLoader();
   }
 
-  onOptionChange2(event: any): void {
-    this.getLocations(event)
+  onOptionChange2(): void {
+   this.getLocationByLocationsRoutesId(
+    this.location.id_locations_routes
+  );
+
   }
 
   onOptionChange(event: any): void {
@@ -151,6 +135,97 @@ export class RestrictionsLocationsDayOfTheWeekComponent implements OnInit {
         });
       },
       complete: () => { }
+    });
+  }
+
+  parseBoolean(value: string): boolean {
+    // Convertir a minúsculas y eliminar espacios en blanco
+
+    if (value !== undefined) {
+      const normalizedValue = value.trim().toLowerCase();
+      // Comparar con 'true', 'false', '0' y '1'
+      if (normalizedValue === 'true' || normalizedValue === '1') {
+        return true;
+      } else if (normalizedValue === 'false' || normalizedValue === '0') {
+        return false;
+      } else {
+        // Si el valor no coincide con ninguno de los esperados, se considera false
+        return false;
+      }
+    }
+
+    return false;
+  }
+
+  updateItem(): void {
+    this.startLoading();
+
+    const item = {
+      festive: this.festive,
+      monday: this.monday,
+      tuesday: this.tuesday,
+      wednesday: this.wednesday,
+      thursday: this.thursday,
+      friday: this.friday,
+      saturday: this.saturday,
+      sunday: this.sunday,
+    };
+
+    this._locationsRoutesService
+      .putLocation(this.id, item)
+      .subscribe({
+        next: (data: any) => {
+
+          this._messageService.add({
+            severity: 'success',
+            summary: 'success',
+            detail: 'modificado correctamente',
+            life: 3000,
+          });
+
+          this.stopLoading();
+          // this._router.navigate(['/locations']);
+        },
+        error: (error: any) => {
+          this.stopLoading();
+          this._messageService.add({
+            severity: 'error',
+            summary: JSON.stringify(error),
+            life: 3000,
+          });
+        },
+        complete: () => {},
+      });
+  }
+
+  getLocationByLocationsRoutesId(id: string): void {
+    this.startLoading();
+
+    this.id = id;
+
+    this._locationsRoutesService.getLocationByLocationsRoutesId(id).subscribe({
+      next: (data: any) => {
+
+        this.monday = this.parseBoolean(data.monday);
+        this.tuesday = this.parseBoolean(data.tuesday);
+        this.wednesday = this.parseBoolean(data.wednesday);
+        this.thursday = this.parseBoolean(data.thursday);
+        this.friday = this.parseBoolean(data.friday);
+        this.saturday = this.parseBoolean(data.saturday);
+        this.sunday = this.parseBoolean(data.sunday);
+        this.festive = this.parseBoolean(data.festive);
+
+        this.stopLoading();
+      },
+      error: (error: any) => {
+        this.stopLoading();
+        this._messageService.add({
+          severity: 'error',
+          summary: JSON.stringify(error),
+          life: 3000,
+        });
+      },
+      complete: () => {},
     });
   }
 

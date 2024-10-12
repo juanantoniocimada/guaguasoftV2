@@ -15,6 +15,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { TitleComponent } from '../../../components/title/title.component';
 import { HourService } from '../../../services/hour.service';
 import { CheckboxModule } from 'primeng/checkbox';
+import { InputIconModule } from 'primeng/inputicon';
+import { FooterComponent } from '../../../components/footer/footer.component';
+import { IconFieldModule } from 'primeng/iconfield';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-restrictions-locations-line-hour',
@@ -30,7 +34,10 @@ import { CheckboxModule } from 'primeng/checkbox';
     StepsModule,
     HttpClientModule,
     TitleComponent,
-    CheckboxModule
+    CheckboxModule,
+    FooterComponent,
+    InputIconModule,
+    IconFieldModule
   ],
   providers:[
     HourService,
@@ -48,6 +55,7 @@ export class RestrictionsLocationsLineHourComponent implements OnInit {
   private _loaderService= inject(LoaderService);
   private _messageService= inject(MessageService);
   private _locationsRoutesService= inject(LocationsRoutesService);
+  private _router=  inject(Router);
 
   routes: any[] = [];
   route: any;
@@ -56,27 +64,86 @@ export class RestrictionsLocationsLineHourComponent implements OnInit {
 
   hours: any[] = [];
 
+  ctaButtons = [
+    { text: 'create Item', action: () => this.createItem() },
+  ];
+
   items = [
-    {
-      'name': '05.40',
-      'value': true
-    },
-    {
-      'name': '09.40',
-      'value': true
-    },
-    {
-      'name': '10.30',
-      'value': false
-    },
-    {
-      'name': '11.30',
-      'value': true
-    },
+
   ]
 
   ngOnInit(): void {
-    this.getRoutes()
+    // this.getRoutes()
+
+    this.get();
+
+  }
+
+  createItem() {
+    this._router.navigate(['/form-restrictions-locations-line-hour']);
+  }
+
+  update(object: any): void {
+    this.startLoading();
+
+    const item = {
+      monday_enabled: object.monday_enabled,
+      tuesday_enabled: object.tuesday_enabled,
+      wednesday_enabled: object.wednesday_enabled,
+      thursday_enabled: object.thursday_enabled,
+      friday_enabled: object.friday_enabled,
+      saturday_enabled: object.saturday_enabled,
+      sunday_enabled: object.sunday_enabled,
+      festive_enabled: object.festive_enabled,
+
+    };
+
+    this._locationsRoutesService
+      .putLocationItinerary(object.id_itinerary_specific_hour, item)
+      .subscribe({
+        next: (data: any) => {
+
+          this._messageService.add({
+            severity: 'success',
+            summary: 'success',
+            detail: 'modificado correctamente',
+            life: 3000,
+          });
+
+          this.stopLoading();
+          // this._router.navigate(['/locations']);
+        },
+        error: (error: any) => {
+          this.stopLoading();
+          this._messageService.add({
+            severity: 'error',
+            summary: JSON.stringify(error),
+            life: 3000,
+          });
+        },
+        complete: () => {},
+      });
+
+    this.stopLoading();
+  }
+
+  parseBoolean(value: string): boolean {
+    // Convertir a minúsculas y eliminar espacios en blanco
+
+    if (value !== undefined) {
+      const normalizedValue = value.trim().toLowerCase();
+      // Comparar con 'true', 'false', '0' y '1'
+      if (normalizedValue === 'true' || normalizedValue === '1') {
+        return true;
+      } else if (normalizedValue === 'false' || normalizedValue === '0') {
+        return false;
+      } else {
+        // Si el valor no coincide con ninguno de los esperados, se considera false
+        return false;
+      }
+    }
+
+    return false;
   }
 
   public startLoading() {
@@ -87,24 +154,30 @@ export class RestrictionsLocationsLineHourComponent implements OnInit {
     this._loaderService.hideLoader();
   }
 
-  onOptionChange(event: any): void {
-    this.getLocations(event)
-  }
-
-  onOptionChange2(event: any): void {
-    this.getLocations(event)
-  }
-
-  getLocations(data: any) {
+  get(): void {
     this.startLoading();
 
-    this._locationsRoutesService.getLocationsByRoute(data.value.id_routes).subscribe({
+    this._locationsRoutesService.get().subscribe({
       next: (data: any) => {
-        this.locations = data;
+
+        this.items = data.map((item: any) => ({
+          ...item,
+          sunday_enabled: item.sunday_enabled === "1",
+          monday_enabled: item.monday_enabled === "1",
+          tuesday_enabled: item.tuesday_enabled === "1",
+          wednesday_enabled: item.wednesday_enabled === "1",
+          thursday_enabled: item.thursday_enabled === "1",
+          friday_enabled: item.friday_enabled === "1",
+          saturday_enabled: item.saturday_enabled === "1",
+          festive_enabled: item.festive_enabled === "1"
+      }));
+
         this.stopLoading();
       },
       error: (error: any) => {
+
         this.stopLoading();
+
         this._messageService.add({
           severity: 'error',
           summary: JSON.stringify(error),

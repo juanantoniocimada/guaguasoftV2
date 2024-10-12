@@ -54,17 +54,6 @@
         <th>parada preferente</th>
         <th>tipo parada</th>
 
-        <!--
-          <th>lunes</th>
-          <th>martes</th>
-          <th>miércoles</th>
-          <th>jueves</th>
-          <th>viernes</th>
-          <th>sábado</th>
-          <th>domingo</th>
-          <th>festivos</th>
-        -->
-
         <th></th>
       </tr>
     </ng-template>
@@ -77,99 +66,8 @@
         <td>{{ location.preferred_stop }}</td>
         <td>{{ location.type }}</td>
 
-        <!--
-        <td>
-          <span>
-            <div *ngIf="location.monday === '1'; else notOk">
-              <i class="pi pi-check" style="font-size: 2em; color: green;"></i>
-            </div>
-            <ng-template #notOk>
-              <i class="pi pi-times" style="font-size: 2em; color: red;"></i>
-            </ng-template>
-          </span>
-        </td>
-
-        <td>
-          <span>
-            <div *ngIf="location.tuesday === '1'; else notOk">
-              <i class="pi pi-check" style="font-size: 2em; color: green;"></i>
-            </div>
-            <ng-template #notOk>
-              <i class="pi pi-times" style="font-size: 2em; color: red;"></i>
-            </ng-template>
-          </span>
-        </td>
-
-        <td>
-          <span>
-            <div *ngIf="location.wednesday === '1'; else notOk">
-              <i class="pi pi-check" style="font-size: 2em; color: green;"></i>
-            </div>
-            <ng-template #notOk>
-              <i class="pi pi-times" style="font-size: 2em; color: red;"></i>
-            </ng-template>
-          </span>
-        </td>
-
-        <td>
-          <span>
-            <div *ngIf="location.thursday === '1'; else notOk">
-              <i class="pi pi-check" style="font-size: 2em; color: green;"></i>
-            </div>
-            <ng-template #notOk>
-              <i class="pi pi-times" style="font-size: 2em; color: red;"></i>
-            </ng-template>
-          </span>
-        </td>
-
-        <td>
-          <span>
-            <div *ngIf="location.friday === '1'; else notOk">
-              <i class="pi pi-check" style="font-size: 2em; color: green;"></i>
-            </div>
-            <ng-template #notOk>
-              <i class="pi pi-times" style="font-size: 2em; color: red;"></i>
-            </ng-template>
-          </span>
-        </td>
-
-        <td>
-          <span>
-            <div *ngIf="location.saturday === '1'; else notOk">
-              <i class="pi pi-check" style="font-size: 2em; color: green;"></i>
-            </div>
-            <ng-template #notOk>
-              <i class="pi pi-times" style="font-size: 2em; color: red;"></i>
-            </ng-template>
-          </span>
-        </td>
-
-        <td>
-          <span>
-            <div *ngIf="location.sunday === '1'; else notOk">
-              <i class="pi pi-check" style="font-size: 2em; color: green;"></i>
-            </div>
-            <ng-template #notOk>
-              <i class="pi pi-times" style="font-size: 2em; color: red;"></i>
-            </ng-template>
-          </span>
-        </td>
-
-        <td>
-          <span>
-            <div *ngIf="location.festive === '1'; else notOk">
-              <i class="pi pi-check" style="font-size: 2em; color: green;"></i>
-            </div>
-            <ng-template #notOk>
-              <i class="pi pi-times" style="font-size: 2em; color: red;"></i>
-            </ng-template>
-          </span>
-        </td>
-        -->
-
         <td>
           <p-button (click)="confirm(location)" icon="pi pi-trash" severity="warning" />
-          <p-button (click)="edit(location)" icon="pi pi-file-edit" severity="help" />
         </td>
       </tr>
     </ng-template>

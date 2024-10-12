@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  background-color: aqua;
+  padding: 1em;
+  margin: 1em;
+}
+
+.custom-hour {
+  border: 1px gray solid;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+}
+
+p-dropdown {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+input {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+p-checkbox {
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+.footer-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 2em;
+  background-color: #74a5d7;
+  border-top: 1px solid #ddd; /* Línea superior para definir el footer */
+  display: flex;
+  justify-content: flex-end; /* Alinea los botones a la derecha */
+  padding: 1em;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Sombra opcional para el footer */
+}

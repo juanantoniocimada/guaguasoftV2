@@ -266,7 +266,7 @@ export class FormLocationComponent implements OnInit {
       friday: this.friday,
       saturday: this.saturday,
       sunday: this.sunday,
-      locations_id: '37',
+      locations_id: '37', // TODO: aqui hay un dato a pincho
       position: this.position,
       type: this.type,
     };

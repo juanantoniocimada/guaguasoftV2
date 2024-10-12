@@ -72,11 +72,6 @@ export class HoursComponent implements OnInit {
     });
   }
 
-  onOptionChange(event: any): void {
-
-    this.getHours(event.value.id_routes)
-  }
-
   deleteHour(routeId: string, hourId: string) {
 
     this.startLoading();
@@ -115,6 +110,11 @@ export class HoursComponent implements OnInit {
 
   edit(hour: any) {
     this._router.navigate(['/form-hour'], { queryParams: { edit: true, id: hour.id_hours_routes } });
+  }
+
+  onOptionChange(event: any): void {
+
+    this.getHours(event.value.id_routes)
   }
 
   getHours(idRoute: any) {

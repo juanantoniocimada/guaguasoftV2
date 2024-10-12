@@ -17,46 +17,101 @@
   <p-dropdown
     [filter]="true"
     [options]="locations"
-    [(ngModel)]="route"
+    [(ngModel)]="location"
     optionLabel="description"
     placeholder="selecciona una localización"
-    (onChange)="onOptionChange2($event)"
+    (onChange)="onOptionChange2()"
   />
 
   <br>
   <br>
   <br>
 
-  <p-table [value]="items" [tableStyle]="{ 'min-width': '50rem' }">
 
-    <ng-template pTemplate="header">
-      <tr>
-       <th>día de la semana</th>
-       <th>activado</th>
-      </tr>
-    </ng-template>
+      <table>
+        <tr>
+          <td>día de la semana</td>
+          <td>activo</td>
 
-    <ng-template pTemplate="body" let-item>
+        </tr>
 
-      <tr>
-        <td>
-          {{item.name}}
-        </td>
-        <td>
-          <p-checkbox
-            [(ngModel)]="item.value"
-            [binary]="true"
-            inputId="binary"
-          />
-        </td>
-      </tr>
+        <tr>
+          <td>
+            monday
+          </td>
+          <td>
+            <p-checkbox [(ngModel)]="monday" [binary]="true" inputId="binary" />
+          </td>
+        </tr>
 
-    </ng-template>
+        <tr>
+          <td>
+            tuesday
+          </td>
+          <td>
+            <p-checkbox [(ngModel)]="tuesday" [binary]="true" inputId="binary" />
+          </td>
+        </tr>
 
+        <tr>
+          <td>
+            wednesday
+          </td>
+          <td>
+            <p-checkbox [(ngModel)]="wednesday" [binary]="true" inputId="binary" />
+          </td>
+        </tr>
 
-  </p-table>
+        <tr>
+          <td>
+            thursday
+          </td>
+          <td>
+            <p-checkbox [(ngModel)]="thursday" [binary]="true" inputId="binary" />
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            friday
+          </td>
+          <td>
+            <p-checkbox [(ngModel)]="friday" [binary]="true" inputId="binary" />
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            saturday
+          </td>
+          <td>
+            <p-checkbox [(ngModel)]="saturday" [binary]="true" inputId="binary" />
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            sunday
+          </td>
+          <td>
+            <p-checkbox [(ngModel)]="sunday" [binary]="true" inputId="binary" />
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            festive
+          </td>
+          <td>
+            <p-checkbox [(ngModel)]="festive" [binary]="true" inputId="binary" />
+          </td>
+        </tr>
+
+      </table>
 
 </div>
+
+<app-footer [ctaButtons]="ctaButtons"></app-footer>
 
 <p-toast />
 

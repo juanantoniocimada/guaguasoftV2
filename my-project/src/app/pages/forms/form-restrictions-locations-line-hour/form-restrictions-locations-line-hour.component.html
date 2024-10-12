@@ -1,0 +1,49 @@
+<app-title title="AÑADIR RESTRICCIÓN LOCALIZACION POR HORA">
+
+</app-title>
+
+
+<div class="container">
+
+  <p-dropdown [filter]="true" [options]="routes" [(ngModel)]="route" optionLabel="description"
+    (onChange)="onOptionChange($event)" placeholder="selecciona una ruta" />
+
+  <p-dropdown [filter]="true" [options]="hours" [(ngModel)]="hour" optionLabel="value"
+    (onChange)="onOptionChange2($event)" placeholder="selecciona una hora" />
+
+  <p-dropdown [filter]="true" [options]="locations" [(ngModel)]="location" optionLabel="description"
+    (onChange)="onOptionChange3($event)" placeholder="selecciona una localización" />
+
+</div>
+
+<div class="container">
+
+  <p-checkbox [(ngModel)]="festive_enabled" label="festive" [binary]="true" inputId="binary" />
+
+  <p-checkbox [(ngModel)]="monday_enabled" [binary]="true" label="monday" inputId="binary" />
+
+  <p-checkbox [(ngModel)]="tuesday_enabled" label="tuesday" [binary]="true" inputId="binary" />
+
+  <p-checkbox [(ngModel)]="wednesday_enabled" label="wednesday" [binary]="true" inputId="binary" />
+
+  <p-checkbox [(ngModel)]="thursday_enabled" label="thursday" [binary]="true" inputId="binary" />
+
+  <p-checkbox [(ngModel)]="friday_enabled" label="friday" [binary]="true" inputId="binary" />
+
+  <p-checkbox [(ngModel)]="saturday_enabled" label="saturday" [binary]="true" inputId="binary" />
+
+  <p-checkbox [(ngModel)]="sunday_enabled" label="sunday" [binary]="true" inputId="binary" />
+
+</div>
+
+<app-footer [ctaButtons]="ctaButtons"></app-footer>
+
+<p-toast />
+
+<p-confirmDialog>
+  <ng-template pTemplate="message" let-message>
+    <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+      <p>{{ message.message }}</p>
+    </div>
+  </ng-template>
+</p-confirmDialog>
