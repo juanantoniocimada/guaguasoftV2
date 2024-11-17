@@ -6,6 +6,18 @@
   margin: 1em;
 }
 
+.group_button {
+  margin-left: 20px;
+  border-radius: 5px;
+  button {
+    margin-left: 1em;
+    background: white;
+    height: 30px;
+    color: grey;
+    border-radius: 5px;
+  }
+}
+
 .custom-hour {
   border: 1px gray solid;
   border-radius: 5px;

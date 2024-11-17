@@ -55,7 +55,6 @@ export class FormHourComponent implements OnInit {
   private _hourService  =inject(HourService);
   private _hoursRoutesService  =inject(HoursRoutesService);
 
-  public festive : boolean = false;
   public monday : boolean = false;
   public tuesday : boolean = false;
   public wednesday : boolean = false;
@@ -63,6 +62,8 @@ export class FormHourComponent implements OnInit {
   public friday : boolean = false;
   public saturday : boolean = false;
   public sunday : boolean = false;
+  public festive : boolean = false;
+
 
   ctaButtons = [
     { text: 'create Item', action: () => this.createItem() },
@@ -75,7 +76,7 @@ export class FormHourComponent implements OnInit {
   hours: any[] = [];
   hour: any;
 
-  public customHour = "11:11:11";
+  public customHour = "01:00:00";
 
   showCustomHour: boolean =false;
 
@@ -111,6 +112,56 @@ export class FormHourComponent implements OnInit {
         // Si el valor no coincide con ninguno de los esperados, se considera false
         return false;
     }
+  }
+
+  selectAll() {
+
+    this.monday = true;
+    this.tuesday = true;
+    this.wednesday = true;
+    this.thursday = true;
+    this.friday = true;
+    this.saturday = true;
+    this.sunday = true;
+    this.festive = true;
+
+  }
+
+  quitAll() {
+    this.monday = false;
+    this.tuesday = false;
+    this.wednesday = false;
+    this.thursday = false;
+    this.friday = false;
+    this.saturday = false;
+    this.sunday = false;
+    this.festive = false;
+  }
+
+  selectWeekdays() {
+    this.monday = true;
+    this.tuesday = true;
+    this.wednesday = true;
+    this.thursday = true;
+    this.friday = true;
+  }
+
+  quitWeekdays() {
+    this.monday = false;
+    this.tuesday = false;
+    this.wednesday = false;
+    this.thursday = false;
+    this.friday = false;
+  }
+
+  selectSundaysAndHolidays() {
+    this.sunday = true;
+    this.festive = true;
+  }
+
+  quitSundaysAndHolidays() {
+    this.sunday = false;
+    this.festive = false;
   }
 
   getRoutes(): void {

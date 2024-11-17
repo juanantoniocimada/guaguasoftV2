@@ -147,6 +147,56 @@ export class FormRestrictionsLocationsLineHourComponent implements OnInit {
     this.stopLoading();
   }
 
+  selectAll() {
+
+    this.monday_enabled = true;
+    this.tuesday_enabled = true;
+    this.wednesday_enabled = true;
+    this.thursday_enabled = true;
+    this.friday_enabled = true;
+    this.saturday_enabled = true;
+    this.sunday_enabled = true;
+    this.festive_enabled = true;
+
+  }
+
+  quitAll() {
+    this.monday_enabled = false;
+    this.tuesday_enabled = false;
+    this.wednesday_enabled = false;
+    this.thursday_enabled = false;
+    this.friday_enabled = false;
+    this.saturday_enabled = false;
+    this.sunday_enabled = false;
+    this.festive_enabled = false;
+  }
+
+  selectWeekdays() {
+    this.monday_enabled = true;
+    this.tuesday_enabled = true;
+    this.wednesday_enabled = true;
+    this.thursday_enabled = true;
+    this.friday_enabled = true;
+  }
+
+  quitWeekdays() {
+    this.monday_enabled = false;
+    this.tuesday_enabled = false;
+    this.wednesday_enabled = false;
+    this.thursday_enabled = false;
+    this.friday_enabled = false;
+  }
+
+  selectSundaysAndHolidays() {
+    this.sunday_enabled = true;
+    this.festive_enabled = true;
+  }
+
+  quitSundaysAndHolidays() {
+    this.sunday_enabled = false;
+    this.festive_enabled = false;
+  }
+
   getLocations(data: any) {
     this.startLoading();
 

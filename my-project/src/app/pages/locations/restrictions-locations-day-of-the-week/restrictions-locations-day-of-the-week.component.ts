@@ -60,14 +60,14 @@ export class RestrictionsLocationsDayOfTheWeekComponent implements OnInit {
 
   public id!: string;
 
-  public monday: boolean = false;
-  public tuesday: boolean = false;
-  public wednesday: boolean = false;
-  public thursday: boolean = false;
-  public friday: boolean = false;
-  public saturday: boolean = false;
-  public sunday: boolean = false;
-  public festive: boolean = false;
+  public monday: boolean = true;
+  public tuesday: boolean = true;
+  public wednesday: boolean = true;
+  public thursday: boolean = true;
+  public friday: boolean = true;
+  public saturday: boolean = true;
+  public sunday: boolean = true;
+  public festive: boolean = true;
 
   ctaButtons = [
     { text: 'update Item', action: () => this.updateItem() }
@@ -136,6 +136,56 @@ export class RestrictionsLocationsDayOfTheWeekComponent implements OnInit {
       },
       complete: () => { }
     });
+  }
+
+  selectAll() {
+
+    this.monday = true;
+    this.tuesday = true;
+    this.wednesday = true;
+    this.thursday = true;
+    this.friday = true;
+    this.saturday = true;
+    this.sunday = true;
+    this.festive = true;
+
+  }
+
+  quitAll() {
+    this.monday = false;
+    this.tuesday = false;
+    this.wednesday = false;
+    this.thursday = false;
+    this.friday = false;
+    this.saturday = false;
+    this.sunday = false;
+    this.festive = false;
+  }
+
+  selectWeekdays() {
+    this.monday = true;
+    this.tuesday = true;
+    this.wednesday = true;
+    this.thursday = true;
+    this.friday = true;
+  }
+
+  quitWeekdays() {
+    this.monday = false;
+    this.tuesday = false;
+    this.wednesday = false;
+    this.thursday = false;
+    this.friday = false;
+  }
+
+  selectSundaysAndHolidays() {
+    this.sunday = true;
+    this.festive = true;
+  }
+
+  quitSundaysAndHolidays() {
+    this.sunday = false;
+    this.festive = false;
   }
 
   parseBoolean(value: string): boolean {

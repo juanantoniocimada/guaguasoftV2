@@ -39,13 +39,33 @@
 </div>
 
 <div class="container">
+  <div class="group_button">
+    <button (click)="selectAll()">select all</button>
 
-  <p-checkbox
-    [(ngModel)]="festive"
-    label="festive"
-    [binary]="true"
-    inputId="binary"
-  />
+
+    <button (click)="quitAll()">quit all</button> <br>
+
+  </div>
+
+  <div class="group_button">
+    <button (click)="selectWeekdays()">select week days</button>
+
+
+    <button (click)="quitWeekdays()">quit week days</button>
+  </div>
+
+
+  <div class="group_button">
+    <button (click)="selectSundaysAndHolidays()">select sundays and holidays</button>
+
+
+    <button (click)="quitSundaysAndHolidays()">quit sundays and holidays</button>
+
+  </div>
+</div>
+
+<div class="container">
+
 
   <p-checkbox
     [(ngModel)]="monday"
@@ -92,6 +112,13 @@
   <p-checkbox
     [(ngModel)]="sunday"
     label="sunday"
+    [binary]="true"
+    inputId="binary"
+  />
+
+  <p-checkbox
+    [(ngModel)]="festive"
+    label="festive"
     [binary]="true"
     inputId="binary"
   />

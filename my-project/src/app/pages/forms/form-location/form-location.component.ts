@@ -281,7 +281,6 @@ export class FormLocationComponent implements OnInit {
           this.stopLoading();
           this._messageService.add({ severity: 'success', summary: 'success', detail: data.message, life: 3000 });
 
-          this._router.navigate(['/locations']);
         },
         error: (error: any) => {
           this.stopLoading();
