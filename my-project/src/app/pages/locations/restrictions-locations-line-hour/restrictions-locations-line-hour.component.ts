@@ -73,10 +73,7 @@ export class RestrictionsLocationsLineHourComponent implements OnInit {
   ]
 
   ngOnInit(): void {
-    // this.getRoutes()
-
-    this.get();
-
+    this.getRoutes()
   }
 
   createItem() {
@@ -127,6 +124,30 @@ export class RestrictionsLocationsLineHourComponent implements OnInit {
     this.stopLoading();
   }
 
+  onOptionChange(event: any): void {
+    this.get(event.value.id_routes);
+  }
+
+  getLocations(data: any) {
+    this.startLoading();
+
+    this._locationsRoutesService.getLocationsByRoute(data.value.id_routes).subscribe({
+      next: (data: any) => {
+        this.locations = data;
+        this.stopLoading();
+      },
+      error: (error: any) => {
+        this.stopLoading();
+        this._messageService.add({
+          severity: 'error',
+          summary: JSON.stringify(error),
+          life: 3000,
+        });
+      },
+      complete: () => { }
+    });
+  }
+
   parseBoolean(value: string): boolean {
     // Convertir a minúsculas y eliminar espacios en blanco
 
@@ -154,11 +175,18 @@ export class RestrictionsLocationsLineHourComponent implements OnInit {
     this._loaderService.hideLoader();
   }
 
-  get(): void {
+  get(id_routes: any): void {
     this.startLoading();
 
-    this._locationsRoutesService.get().subscribe({
+    const item = {
+      id_routes: id_routes
+    };
+
+    this._locationsRoutesService.get(item).subscribe({
       next: (data: any) => {
+
+        console.log(data);
+
 
         this.items = data.map((item: any) => ({
           ...item,

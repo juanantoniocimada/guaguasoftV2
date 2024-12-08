@@ -48,7 +48,7 @@ export class LocationsRoutesService {
     return this._http.get<any>(`${this._apiUrl}/${routeId}`);
   }
 
-  get(): Observable<any> {
-    return this._http.post<any>(`${this._apiUrlV2}`,{});
+  get(item: any): Observable<any> {
+    return this._http.post<any>(`${this._apiUrlV2}-get`, item);
   }
 }

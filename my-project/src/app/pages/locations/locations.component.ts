@@ -140,6 +140,8 @@ export class LocationsComponent {
     this.getLocations(event)
   }
 
+
+
   public startLoading() {
     this._loaderService.showIndeterminate();
   }
