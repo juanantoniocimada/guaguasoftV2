@@ -19,6 +19,7 @@
       <tr>
         <th>(id)</th>
         <th>number</th>
+        <th>color</th>
         <th>description</th>
         <th></th>
       </tr>
@@ -27,6 +28,7 @@
       <tr>
         <td>{{ route.id_routes }}</td>
         <td>{{ route.number }}</td>
+        <td [style.backgroundColor]="route.color"></td>
         <td>{{ route.description }}</td>
         <td class="actions">
 
