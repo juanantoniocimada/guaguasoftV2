@@ -21,6 +21,7 @@
         <th>number</th>
         <th>color</th>
         <th>description</th>
+        <th>variante</th>
         <th></th>
       </tr>
     </ng-template>
@@ -30,10 +31,12 @@
         <td>{{ route.number }}</td>
         <td [style.backgroundColor]="route.color"></td>
         <td>{{ route.description }}</td>
+        <td>{{ route.variant }}</td>
         <td class="actions">
 
           <p-button (click)="edit(route.id_routes)" icon="pi pi-file-edit" severity="help" />
           <p-button (click)="delete(route.id_routes)" icon="pi pi-trash" severity="warning" />
+          <p-button icon="pi pi-folder-open" severity="help" />
 
         </td>
       </tr>

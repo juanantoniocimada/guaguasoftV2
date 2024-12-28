@@ -65,7 +65,11 @@ export class RestrictionsLocationsLineHourComponent implements OnInit {
   hours: any[] = [];
 
   ctaButtons = [
-    { text: 'create Item', action: () => this.createItem() },
+    {
+      text: 'crear',
+      icon:'pi pi-power-off',
+      action: () => this.createItem()
+    },
   ];
 
   items = [
@@ -78,6 +82,19 @@ export class RestrictionsLocationsLineHourComponent implements OnInit {
 
   createItem() {
     this._router.navigate(['/form-restrictions-locations-line-hour']);
+  }
+
+  all(item: any) {
+
+    item.monday_enabled = true;
+    item.tuesday_enabled = true;
+    item.wednesday_enabled = true;
+    item.thursday_enabled = true;
+    item.friday_enabled = true;
+    item.saturday_enabled = true;
+    item.sunday_enabled = true;
+    item.festive_enabled = true;
+
   }
 
   update(object: any): void {

@@ -19,6 +19,9 @@
 
       <ng-template pTemplate="header">
         <tr>
+
+        <th>(id)</th>
+
         <th>hora</th>
 
         <th>localizacion</th>
@@ -71,6 +74,10 @@
       <tr>
 
       <td>
+        {{ item.id_itinerary_specific_hour }}
+      </td>
+
+      <td>
         {{ item.value }}
       </td>
 
@@ -80,6 +87,12 @@
 
       <td>
         {{ item.description }}
+      </td>
+
+      <td>
+        <button (click)="all(item)">
+          all
+        </button>
       </td>
 
       <td>

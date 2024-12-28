@@ -70,7 +70,11 @@ export class RestrictionsLocationsDayOfTheWeekComponent implements OnInit {
   public festive: boolean = true;
 
   ctaButtons = [
-    { text: 'update Item', action: () => this.updateItem() }
+    {
+      text: 'editar',
+      icon:'pi pi-power-off',
+      action: () => this.updateItem()
+    }
   ];
 
   ngOnInit(): void {

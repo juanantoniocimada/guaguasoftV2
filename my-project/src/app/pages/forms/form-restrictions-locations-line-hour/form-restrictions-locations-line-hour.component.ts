@@ -50,7 +50,10 @@ import { log } from 'console';
 export class FormRestrictionsLocationsLineHourComponent implements OnInit {
 
   ctaButtons = [
-    { text: 'save', action: () => this.save() },
+    {
+      text: 'save',
+      icon:'pi pi-power-off',
+      action: () => this.save() },
   ];
 
   routes: any[] = [];
@@ -116,9 +119,6 @@ export class FormRestrictionsLocationsLineHourComponent implements OnInit {
 
     };
 
-    console.log(item);
-
-
     this._locationsRoutesService
       .post(item)
       .subscribe({
@@ -128,18 +128,32 @@ export class FormRestrictionsLocationsLineHourComponent implements OnInit {
             severity: 'success',
             summary: 'success',
             detail: 'creado correctamente',
-            life: 3000,
+            life: 1000,
           });
 
           this.stopLoading();
+
+          const currentIndex = this.hours.findIndex(hour => hour.value === this.hour.value);
+          this.hour = this.hours[currentIndex + 1];
+          console.log(this.hour);
+
+          this.id_hours_routes = this.hour.id_hours_routes
+
         },
         error: (error: any) => {
           this.stopLoading();
           this._messageService.add({
             severity: 'error',
-            summary: JSON.stringify(error),
-            life: 3000,
+            life: 1000,
           });
+
+          const currentIndex = this.hours.findIndex(hour => hour.value === this.hour.value);
+          this.hour = this.hours[currentIndex + 1];
+          console.log(this.hour);
+
+          this.id_hours_routes = this.hour.id_hours_routes
+
+
         },
         complete: () => {},
       });

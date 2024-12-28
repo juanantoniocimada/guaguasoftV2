@@ -19,32 +19,30 @@ import { LoaderService } from '../../services/loader.service';
 })
 export class NavbarComponent {
 
-  private _loaderService= inject(LoaderService);
+  loaderService= inject(LoaderService);
   private _sidebarService= inject(SidebarService);
 
   sidebarVisible$ = this._sidebarService.getSidebarVisibility();
 
-  mode = 'determinate';
+  public mode = 'determinate';
+  private _router= inject(Router);
+  public sidebarVisible: boolean = false;
 
   constructor() {
-    this._loaderService.loaderState$.subscribe((state) => {
+    this.loaderService.loaderState$.subscribe((state) => {
       this.mode = state;
     });
   }
 
-  private _router= inject(Router);
-
-  sidebarVisible: boolean = false;
-
-  navigate(path: string) {
+  public navigate(path: string) {
     this._router.navigate([path]);
   }
 
-  logout() {
+  public logout() {
 
   }
 
-  toggleSidebar() {
+  public toggleSidebar() {
     this._sidebarService.toggleSidebar(true);
   }
 }

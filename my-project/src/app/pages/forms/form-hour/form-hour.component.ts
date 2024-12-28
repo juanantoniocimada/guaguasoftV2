@@ -66,8 +66,16 @@ export class FormHourComponent implements OnInit {
 
 
   ctaButtons = [
-    { text: 'create Item', action: () => this.createItem() },
-    { text: 'update Item', action: () => this.updateItem() }
+    {
+      text: 'crear',
+      icon:'pi pi-power-off',
+      action: () => this.createItem()
+    },
+    {
+      text: 'editar',
+      icon:'pi pi-power-off',
+      action: () => this.updateItem()
+    }
   ];
 
   routes: any[] = [];
@@ -350,7 +358,14 @@ export class FormHourComponent implements OnInit {
       next: (data: any) => {
 
         this.stopLoading();
-        this._router.navigate(['/hours']);
+        // this._router.navigate(['/hours']);
+
+        this.stopLoading();
+        this._messageService.add({
+          severity: 'success',
+          summary: 'ok',
+          life: 3000,
+        });
 
       },
       error: (error: any) => {

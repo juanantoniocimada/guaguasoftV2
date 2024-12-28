@@ -58,8 +58,16 @@ export class FormRouteComponent implements OnInit {
   public color = '';
 
   ctaButtons = [
-    { text: 'create Item', action: () => this.createItem() },
-    { text: 'update Item', action: () => this.updateItem() }
+    {
+        text: 'crear',
+        icon:'pi pi-power-off',
+        action: () => this.createItem()
+    },
+    {
+        text: 'editar',
+        icon:'pi pi-power-off',
+        action: () => this.updateItem()
+    }
   ];
 
   ngOnInit(): void {
