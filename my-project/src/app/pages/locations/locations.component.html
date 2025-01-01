@@ -39,10 +39,18 @@
     [filter]="true"
     [options]="routes"
     [(ngModel)]="route"
+    placeholder="selecciona una localización"
     optionLabel="description"
-    placeholder="selecciona una ruta"
     (onChange)="onOptionChange($event)"
-  />
+  >
+
+  <ng-template let-item pTemplate="item">
+    <div [ngStyle]="{'border-bottom': '5px solid ' + item.color}">
+      <span>{{item.description}} - {{item.number}}</span>
+    </div>
+  </ng-template>
+
+  </p-dropdown>
 
   <p-table [value]="locations" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">

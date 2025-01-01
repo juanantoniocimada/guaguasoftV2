@@ -155,6 +155,9 @@ export class LocationsComponent {
 
     this._routeService.getAllItems().subscribe({
       next: (data: any) => {
+
+        console.log(data);
+
         this.routes = data;
         this.stopLoading();
       },

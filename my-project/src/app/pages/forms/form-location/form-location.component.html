@@ -12,7 +12,14 @@
     [(ngModel)]="route"
     optionLabel="description"
     placeholder="selecciona una ruta"
-  />
+    optionLabel="description"
+  >
+    <ng-template let-item pTemplate="item">
+      <div [ngStyle]="{'border-bottom': '5px solid ' + item.color}">
+        <span>{{item.description}} - {{item.number}}</span>
+      </div>
+    </ng-template>
+  </p-dropdown>
 
   <p-dropdown
     [filter]="true"
